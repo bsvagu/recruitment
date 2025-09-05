@@ -1,0 +1,75 @@
+You are a senior full-stack engineer. Build a recruitment portal with two entities (Company and Contact) inspired by LinkedIn’s fields and best practices. 
+
+ 
+
+**Project scope & goals** 
+
+- Create a full-stack web app (front‑end + back‑end) with TypeScript and modern tooling. 
+
+- Two core entities: 
+
+  1) Company (Account): fields include id, name, legalName, emailDomains, companyType, employeeCountRange, industry, specialties (tags), foundedYear, status, description, websiteUrl, linkedinUrl, logoUrl, bannerUrl, addresses[], emails[], phones[], lifecycleStage, recordStatus, ownerId, tags[], customFields, createdAt, updatedAt. CompanyType and employeeCountRange follow LinkedIn values【830414864970000†L47-L118】. 
+
+  2) Contact: fields include id, prefix, firstName, middleName, lastName, suffix, preferredName, pronouns, headline, title, department, seniority, companyId (FK), companyNameSnapshot, linkedinUrl, emails[], phones[], addresses[], locationLabel (city, state/province, country, postal code), timeZone, employment start/end and current flags, employmentHistory[], lifecycleStage, recordStatus, ownerId, tags[], notes, customFields, createdAt, updatedAt【669839717281848†L186-L209】. 
+
+- A reusable Address sub-entity: id, type (HQ/Billing/Shipping/Office/Remote/Home/Other), label, street1, street2, city, state, postalCode, countryCode (ISO‑3166 alpha‑2), geo (lat/lng), isPrimary. 
+
+- Include Email and Phone sub-entities with labels (Work/Personal/Mobile/Fax etc.), value, isPrimary, isVerified. 
+
+- Provide CRUD (create/read/update/soft-delete) for Company and Contact. 
+
+- List endpoints: support keyword search (q across name, domain, title, headline, email, phone), structured filters (industry, companyType, size, status, country), multi-field sorting (sort=name:asc,updatedAt:desc), page size limit (default 25, max 100) and cursor-based pagination (cursor) to fetch next pages. 
+
+- Use JSON Schema or Zod for strong validation (e.g., email format, URL normalization). 
+
+- Soft delete: isDeleted flag; archived records hidden by default but filterable. 
+
+- Extensibility: allow dynamic custom fields via a FieldDef model (entity kind, key, label, type, options, required flag) so admins can define new attributes without schema migrations. 
+
+- Provide unique constraints on emailDomains (Company) and primary email (Contact). Normalize domains and ensure no duplicates. 
+
+ 
+
+**Technology stack** 
+
+- Frontend: Next.js (App Router) + React + TypeScript + Tailwind CSS; use shadcn/ui components; Radix primitives; React Query (TanStack) for data fetching; React Hook Form + Zod for forms. 
+
+- Backend: Prisma ORM with PostgreSQL (UUIDs, JSONB columns); Node.js/Express or Next.js API routes; full-text search or trigram for fuzzy search; server actions for mutations where appropriate. 
+
+- Auth & RBAC: NextAuth with roles (admin, manager, recruiter, viewer). Only authorized roles can edit or delete; viewers read-only. 
+
+- Country dropdown: load country options from /data/countries.json with code, name, flag emoji and optional SVG; store only the countryCode in entities; provide a <CountrySelect> component showing flag + name. 
+
+- UI pages: 
+
+  - Companies list: Data table with search bar, filter chips, sort dropdown, cursor pagination controls, create button. Each row has actions (View, Edit, Archive). Inline drawer form for create/edit with sections: Basic, Web & Social, Size & Type, Addresses (repeatable address forms), Emails, Phones, Tags, Custom Fields. 
+
+  - Company detail: Tabs for Overview (fields & addresses), Contacts (related contacts), Activity (future use), Custom Fields (dynamic rendering). 
+
+  - Contacts list: Data table with search across name/title/email/company, filters (seniority, lifecycleStage, status, country), sort, pagination, create/edit drawer. 
+
+  - Contact detail: Tabs for Overview (personal info, job details), Company & Employment (current company and history), Contact Info (addresses/emails/phones), Notes, Custom Fields. 
+
+- Reusable components: DataTable, AddressForm, EmailList, PhoneList, TagInput, CountrySelect, ConfirmDialog, SearchInput, FilterChips, SortPicker. Use modals/drawers with framer-motion animations and consistent styling (rounded corners, soft shadows). 
+
+- API design: REST endpoints under /api/companies and /api/contacts for listing, reading, creating, patching, deleting; include query params q, filters, sort, limit, cursor, include=addresses,emails,phones. 
+
+- Response envelope: { data: [entities], meta: { count, hasNext }, links: { next: '...cursor...' } }. 
+
+- Database indexing: Add indexes on Company.name, Company.industry, Contact.lastName and Contact.companyId; use partial indexes to ignore soft-deleted records; optionally GIN or pg_trgm indexes for search. 
+
+- Provide seed scripts with example companies and contacts, plus ZA/IN/US/AE countries. 
+
+- Testing: Unit tests for validation and search/filter logic; basic end-to-end tests to create/edit/delete Company and Contact and verify list operations. 
+
+ 
+
+**Deliverables** 
+
+- Complete project with directory structure (frontend & backend integrated), Prisma schema, migrations, seed data, API routes, pages and components. 
+
+- README.md with setup instructions (install dependencies, run docker compose up for Postgres, run migrations and seed, start dev server). 
+
+- Country assets in public/flags/{code}.svg and data/countries.json. 
+
+- Optional admin page for managing custom field definitions (create/edit/disable FieldDef) and dynamic rendering of custom fields in forms and details. 
