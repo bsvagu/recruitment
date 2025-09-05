@@ -14,6 +14,18 @@ export type {
   InsertPhone,
   FieldDefinition,
   InsertFieldDefinition,
+  Job,
+  InsertJob,
+  JobApplication,
+  InsertJobApplication,
+  Interview,
+  InsertInterview,
+  AnalyticsEvent,
+  InsertAnalyticsEvent,
+  ReportConfiguration,
+  InsertReportConfiguration,
+  Dashboard,
+  InsertDashboard,
 } from "@shared/schema";
 
 // Additional frontend-specific types

@@ -1,7 +1,7 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertCompanySchema, insertContactSchema, insertUserSchema, insertAddressSchema, insertEmailSchema, insertPhoneSchema, insertFieldDefinitionSchema } from "@shared/schema";
+import { insertCompanySchema, insertContactSchema, insertUserSchema, insertAddressSchema, insertEmailSchema, insertPhoneSchema, insertFieldDefinitionSchema, insertJobSchema, insertJobApplicationSchema, insertInterviewSchema } from "@shared/schema";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
@@ -44,6 +44,34 @@ const registerSchema = insertUserSchema.extend({
 
 const getFieldDefinitionsQuerySchema = z.object({
   entityType: z.string().optional(),
+});
+
+const getJobsQuerySchema = z.object({
+  q: z.string().optional(),
+  status: z.string().optional(),
+  employmentType: z.string().optional(),
+  department: z.string().optional(),
+  location: z.string().optional(),
+  priority: z.string().optional(),
+  isRemote: z.coerce.boolean().optional(),
+  sort: z.string().default("updatedAt:desc"),
+  limit: z.coerce.number().min(1).max(100).default(25),
+  cursor: z.string().optional(),
+  includeDeleted: z.coerce.boolean().default(false),
+});
+
+const getAnalyticsQuerySchema = z.object({
+  range: z.string().default("30d"),
+  metrics: z.string().optional(),
+  groupBy: z.string().optional(),
+});
+
+const getReportsQuerySchema = z.object({
+  q: z.string().optional(),
+  category: z.string().optional(),
+  type: z.string().optional(),
+  sort: z.string().default("updatedAt:desc"),
+  limit: z.coerce.number().min(1).max(100).default(25),
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -551,6 +579,124 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting field definition:", error);
       res.status(500).json({ message: "Failed to delete field definition" });
+    }
+  });
+
+  // JOBS ROUTES
+  app.get("/api/jobs", async (req: Request, res: Response) => {
+    try {
+      const query = getJobsQuerySchema.parse(req.query);
+      // Mock data for now - replace with actual storage calls
+      const jobs: any[] = [];
+      
+      res.json({ 
+        data: jobs,
+        meta: {
+          count: jobs.length,
+          total: jobs.length,
+          hasNext: false,
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      res.status(400).json({ 
+        message: error instanceof z.ZodError ? "Invalid query parameters" : "Failed to fetch jobs",
+        errors: error instanceof z.ZodError ? error.errors : undefined,
+      });
+    }
+  });
+
+  app.post("/api/jobs", async (req: Request, res: Response) => {
+    try {
+      const jobData = insertJobSchema.parse(req.body);
+      // Mock response for now - replace with actual storage call
+      const job = { id: "job_1", ...jobData, createdAt: new Date(), updatedAt: new Date() };
+      
+      res.status(201).json({ data: job });
+    } catch (error) {
+      console.error("Error creating job:", error);
+      res.status(400).json({ 
+        message: error instanceof z.ZodError ? "Invalid job data" : "Failed to create job",
+        errors: error instanceof z.ZodError ? error.errors : undefined,
+      });
+    }
+  });
+
+  // ANALYTICS ROUTES
+  app.get("/api/analytics", async (req: Request, res: Response) => {
+    try {
+      const query = getAnalyticsQuerySchema.parse(req.query);
+      
+      // Mock analytics data
+      const analytics = {
+        metrics: {
+          totalJobs: 156,
+          activeJobs: 89,
+          totalApplications: 2847,
+          hiredCandidates: 42,
+          avgTimeToHire: 18,
+          conversionRate: 0.128,
+        },
+        charts: {
+          applicationsOverTime: [],
+          hiringFunnel: [],
+          sourceBreakdown: [],
+          performanceMetrics: [],
+        }
+      };
+      
+      res.json({ data: analytics });
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(400).json({ 
+        message: error instanceof z.ZodError ? "Invalid query parameters" : "Failed to fetch analytics",
+        errors: error instanceof z.ZodError ? error.errors : undefined,
+      });
+    }
+  });
+
+  // REPORTS ROUTES
+  app.get("/api/reports", async (req: Request, res: Response) => {
+    try {
+      const query = getReportsQuerySchema.parse(req.query);
+      
+      // Mock reports data
+      const reports: any[] = [];
+      
+      res.json({ 
+        data: reports,
+        meta: {
+          count: reports.length,
+          total: reports.length,
+          hasNext: false,
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+      res.status(400).json({ 
+        message: error instanceof z.ZodError ? "Invalid query parameters" : "Failed to fetch reports",
+        errors: error instanceof z.ZodError ? error.errors : undefined,
+      });
+    }
+  });
+
+  app.post("/api/reports", async (req: Request, res: Response) => {
+    try {
+      // Mock report creation for now
+      const reportData = req.body;
+      const report = { 
+        id: "report_1", 
+        ...reportData, 
+        createdAt: new Date(), 
+        updatedAt: new Date() 
+      };
+      
+      res.status(201).json({ data: report });
+    } catch (error) {
+      console.error("Error creating report:", error);
+      res.status(400).json({ 
+        message: "Failed to create report"
+      });
     }
   });
 

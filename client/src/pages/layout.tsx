@@ -20,6 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   ];
 
   const analyticsItems = [
+    { path: "/analytics", label: "Analytics", icon: BarChart3 },
     { path: "/reports", label: "Reports", icon: BarChart3 },
     { path: "/insights", label: "Insights", icon: PieChart },
   ];
@@ -43,33 +44,33 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             
             <nav className="hidden md:flex items-center space-x-6">
-              <Link href="/companies">
-                <a className={`text-sm font-medium transition-colors pb-4 -mb-px ${
-                  location.startsWith('/companies') 
-                    ? 'text-primary border-b-2 border-primary' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}>
-                  Companies
-                </a>
+              <Link href="/companies" className={`text-sm font-medium transition-colors pb-4 -mb-px ${
+                location.startsWith('/companies') 
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}>
+                Companies
               </Link>
-              <Link href="/contacts">
-                <a className={`text-sm font-medium transition-colors pb-4 -mb-px ${
-                  location.startsWith('/contacts') 
-                    ? 'text-primary border-b-2 border-primary' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}>
-                  Contacts
-                </a>
+              <Link href="/contacts" className={`text-sm font-medium transition-colors pb-4 -mb-px ${
+                location.startsWith('/contacts') 
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}>
+                Contacts
               </Link>
-              <Link href="/reports">
-                <a className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  Reports
-                </a>
+              <Link href="/analytics" className={`text-sm font-medium transition-colors pb-4 -mb-px ${
+                location.startsWith('/analytics') 
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}>
+                Analytics
               </Link>
-              <Link href="/settings">
-                <a className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  Settings
-                </a>
+              <Link href="/reports" className={`text-sm font-medium transition-colors pb-4 -mb-px ${
+                location.startsWith('/reports') 
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}>
+                Reports
               </Link>
             </nav>
           </div>
@@ -118,24 +119,22 @@ export default function Layout({ children }: LayoutProps) {
               const isActive = location === item.path || (item.path !== '/' && location.startsWith(item.path));
               
               return (
-                <Link key={item.path} href={item.path}>
-                  <a className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
-                    isActive 
-                      ? 'bg-primary/10 text-primary font-medium' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }`} data-testid={`link-${item.label.toLowerCase()}`}>
-                    <Icon className="w-4 h-4" />
-                    <span>{item.label}</span>
-                    {item.count && (
-                      <Badge 
-                        variant={isActive ? "default" : "secondary"} 
-                        className={`ml-auto text-xs ${isActive ? 'bg-primary text-primary-foreground' : ''}`}
-                        data-testid={`badge-${item.label.toLowerCase()}-count`}
-                      >
-                        {item.count}
-                      </Badge>
-                    )}
-                  </a>
+                <Link key={item.path} href={item.path} className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
+                  isActive 
+                    ? 'bg-primary/10 text-primary font-medium' 
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                }`} data-testid={`link-${item.label.toLowerCase()}`}>
+                  <Icon className="w-4 h-4" />
+                  <span>{item.label}</span>
+                  {item.count && (
+                    <Badge 
+                      variant={isActive ? "default" : "secondary"} 
+                      className={`ml-auto text-xs ${isActive ? 'bg-primary text-primary-foreground' : ''}`}
+                      data-testid={`badge-${item.label.toLowerCase()}-count`}
+                    >
+                      {item.count}
+                    </Badge>
+                  )}
                 </Link>
               );
             })}
@@ -150,15 +149,13 @@ export default function Layout({ children }: LayoutProps) {
                 const isActive = location === item.path || (item.path !== '/' && location.startsWith(item.path));
                 
                 return (
-                  <Link key={item.path} href={item.path}>
-                    <a className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
-                      isActive 
-                        ? 'bg-primary/10 text-primary font-medium' 
-                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                    }`} data-testid={`link-${item.label.toLowerCase()}`}>
-                      <Icon className="w-4 h-4" />
-                      <span>{item.label}</span>
-                    </a>
+                  <Link key={item.path} href={item.path} className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
+                    isActive 
+                      ? 'bg-primary/10 text-primary font-medium' 
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                  }`} data-testid={`link-${item.label.toLowerCase()}`}>
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
                   </Link>
                 );
               })}
@@ -174,15 +171,13 @@ export default function Layout({ children }: LayoutProps) {
                 const isActive = location === item.path || (item.path !== '/' && location.startsWith(item.path));
                 
                 return (
-                  <Link key={item.path} href={item.path}>
-                    <a className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
-                      isActive 
-                        ? 'bg-primary/10 text-primary font-medium' 
-                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                    }`} data-testid={`link-${item.label.toLowerCase().replace(' ', '-')}`}>
-                      <Icon className="w-4 h-4" />
-                      <span>{item.label}</span>
-                    </a>
+                  <Link key={item.path} href={item.path} className={`flex items-center space-x-3 px-3 py-2 rounded-md transition-colors ${
+                    isActive 
+                      ? 'bg-primary/10 text-primary font-medium' 
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                  }`} data-testid={`link-${item.label.toLowerCase().replace(' ', '-')}`}>
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
                   </Link>
                 );
               })}

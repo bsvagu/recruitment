@@ -6,6 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/pages/layout";
 import Companies from "@/pages/companies";
 import Contacts from "@/pages/contacts";
+import Jobs from "@/pages/jobs";
+import Analytics from "@/pages/analytics";
+import Reports from "@/pages/reports";
+import Insights from "@/pages/insights";
 import CompanyDetail from "@/pages/company-detail";
 import ContactDetail from "@/pages/contact-detail";
 import NotFound from "@/pages/not-found";
@@ -19,6 +23,12 @@ function Router() {
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/contacts" component={Contacts} />
         <Route path="/contacts/:id" component={ContactDetail} />
+        <Route path="/jobs" component={Jobs} />
+        <Route path="/analytics" component={Analytics} />
+        <Route path="/reports" component={Reports} />
+        <Route path="/insights" component={Insights} />
+        <Route path="/settings" component={() => <div className="p-8 text-center text-muted-foreground">Settings feature coming soon</div>} />
+        <Route path="/user-management" component={() => <div className="p-8 text-center text-muted-foreground">User Management feature coming soon</div>} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
