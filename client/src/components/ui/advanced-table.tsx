@@ -109,7 +109,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
 
   if (isLoading) {
     return (
-      <div className="container my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm overflow-x-auto">
+      <div className="container my-10 space-y-4 p-4 border border-border rounded-none bg-background shadow-sm overflow-x-auto">
         <div className="animate-pulse">
           <div className="flex gap-4 items-center justify-between mb-6">
             <div className="flex gap-2">
@@ -129,7 +129,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
   }
 
   return (
-    <div className="container my-10 space-y-4 p-4 border border-border rounded-lg bg-background shadow-sm overflow-x-auto">
+    <div className="container my-10 space-y-4 p-4 border border-border rounded-none bg-background shadow-sm overflow-x-auto">
       <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
         <div className="flex gap-2 flex-wrap">
           <Input
@@ -189,7 +189,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
                 {visibleColumns.includes("Company") && (
                   <TableCell className="font-medium whitespace-nowrap">
                     <div className="flex items-center space-x-3">
-                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                      <div className="h-10 w-10 rounded-none bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
                         {getCompanyInitials(company.name)}
                       </div>
                       <span data-testid={`text-company-name-${company.id}`}>{company.name}</span>
@@ -250,7 +250,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
                           </Tooltip>
                         ))}
                         {company.contacts.length > 3 && (
-                          <div className="h-8 w-8 rounded-full bg-muted border-2 border-white flex items-center justify-center text-xs font-medium">
+                          <div className="h-8 w-8 rounded-none bg-muted border-2 border-white flex items-center justify-center text-xs font-medium">
                             +{company.contacts.length - 3}
                           </div>
                         )}
