@@ -41,7 +41,7 @@ export default function CompanyEdit() {
             <Skeleton className="h-4 w-96" />
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
               {Array.from({ length: 6 }).map((_, i) => (
                 <Skeleton key={i} className="h-10 w-full" />
               ))}

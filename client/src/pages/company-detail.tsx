@@ -199,7 +199,7 @@ export default function CompanyDetail() {
                 <CardHeader>
                   <CardTitle>Company Details</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <span className="text-sm font-medium text-muted-foreground">Company Type</span>
@@ -264,7 +264,7 @@ export default function CompanyDetail() {
                       Addresses
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                     {company.addresses.map((address, index) => (
                       <div key={index} className="border rounded-none p-4">
                         <div className="flex items-center justify-between mb-2">
@@ -299,7 +299,7 @@ export default function CompanyDetail() {
                 <CardHeader>
                   <CardTitle className="text-base">Contact Information</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   {/* Emails */}
                   {company.emails && company.emails.length > 0 && (
                     <div>
@@ -395,7 +395,7 @@ export default function CompanyDetail() {
             </CardHeader>
             <CardContent>
               {company.contacts && company.contacts.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   {company.contacts.map((contact) => (
                     <div key={contact.id} className="flex items-center space-x-4 p-4 border rounded-none">
                       <Avatar className="h-12 w-12">

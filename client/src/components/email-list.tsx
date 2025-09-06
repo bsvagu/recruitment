@@ -80,7 +80,7 @@ export default function EmailList({ emails = [], onChange, className }: EmailLis
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
         {emailList.map((emailEntry, index) => (
           <div key={index} className="flex items-center gap-3 p-3 border rounded-none" data-testid={`email-entry-${index}`}>
             <Select

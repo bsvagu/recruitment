@@ -200,7 +200,7 @@ export default function Reports() {
               </DialogHeader>
               <div className="overflow-y-auto max-h-[calc(90vh-120px)] space-y-6 p-1">
                 {/* Basic Information */}
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <h3 className="text-lg font-medium">Basic Information</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -243,7 +243,7 @@ export default function Reports() {
                 <Separator />
 
                 {/* Report Configuration */}
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <h3 className="text-lg font-medium">Report Configuration</h3>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
@@ -298,7 +298,7 @@ export default function Reports() {
                 <Separator />
 
                 {/* Metrics Selection */}
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <h3 className="text-lg font-medium">Metrics to Include</h3>
                   <div className="grid grid-cols-2 gap-4">
                     {availableMetrics[dataSource as keyof typeof availableMetrics]?.map((metric) => (
@@ -326,7 +326,7 @@ export default function Reports() {
                 <Separator />
 
                 {/* Filters Selection */}
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <h3 className="text-lg font-medium">Available Filters</h3>
                   <div className="grid grid-cols-2 gap-4">
                     {availableFilters.map((filter) => (
@@ -415,7 +415,7 @@ export default function Reports() {
           <TabsTrigger value="scheduled" data-testid="tab-scheduled">Scheduled</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="templates" className="space-y-4">
+        <TabsContent value="templates" className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {reports.map((report) => (
               <Card key={report.id} className="hover:shadow-md transition-shadow">
@@ -474,7 +474,7 @@ export default function Reports() {
           </div>
         </TabsContent>
 
-        <TabsContent value="custom" className="space-y-4">
+        <TabsContent value="custom" className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
           <div className="text-center py-12">
             <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">No Custom Reports Yet</h3>
@@ -486,7 +486,7 @@ export default function Reports() {
           </div>
         </TabsContent>
 
-        <TabsContent value="scheduled" className="space-y-4">
+        <TabsContent value="scheduled" className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
           <div className="text-center py-12">
             <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">No Scheduled Reports</h3>

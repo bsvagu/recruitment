@@ -303,7 +303,7 @@ export default function Insights() {
           <TabsTrigger value="predictions" data-testid="tab-predictions">Predictions</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="insights" className="space-y-4">
+        <TabsContent value="insights" className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
           {filteredInsights.map((insight) => (
             <Card key={insight.id} className={`border-l-4 ${getSeverityColor(insight.severity)}`}>
               <CardHeader className="pb-3">
@@ -427,21 +427,21 @@ export default function Insights() {
               Advanced ML models will analyze your data to provide predictive insights
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <Card className="p-6">
+              <Card className="p-6 border border-gray-200 dark:border-gray-700">
                 <Calendar className="h-8 w-8 text-green-600 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Hiring Demand</h4>
                 <p className="text-sm text-muted-foreground">
                   Predict peak hiring periods and resource needs
                 </p>
               </Card>
-              <Card className="p-6">
+              <Card className="p-6 border border-gray-200 dark:border-gray-700">
                 <Users className="h-8 w-8 text-green-600 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Candidate Quality</h4>
                 <p className="text-sm text-muted-foreground">
                   Score and rank candidates based on success patterns
                 </p>
               </Card>
-              <Card className="p-6">
+              <Card className="p-6 border border-gray-200 dark:border-gray-700">
                 <DollarSign className="h-8 w-8 text-green-600 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Cost Optimization</h4>
                 <p className="text-sm text-muted-foreground">

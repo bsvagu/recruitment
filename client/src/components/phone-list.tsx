@@ -79,7 +79,7 @@ export default function PhoneList({ phones = [], onChange, className }: PhoneLis
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
         {phoneList.map((phoneEntry, index) => (
           <div key={index} className="flex items-center gap-3 p-3 border rounded-none" data-testid={`phone-entry-${index}`}>
             <Select

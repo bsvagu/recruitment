@@ -91,7 +91,7 @@ export default function CompanyOverview() {
                 <Skeleton className="h-6 w-48" />
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="flex items-center space-x-3">
                       <Skeleton className="h-4 w-4" />
@@ -204,7 +204,7 @@ export default function CompanyOverview() {
               <CardTitle>Company Details</CardTitle>
               <CardDescription>Basic company information and contact details</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
               {company.data.websiteUrl && (
                 <div className="flex items-center space-x-3">
                   <Globe className="h-4 w-4 text-muted-foreground" />

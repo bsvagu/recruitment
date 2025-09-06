@@ -223,7 +223,7 @@ export default function ContactForm({ contact, onSuccess, className }: ContactFo
                 Personal Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-2">
                   <FormField
@@ -401,7 +401,7 @@ export default function ContactForm({ contact, onSuccess, className }: ContactFo
                 Company & Employment
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
               <FormField
                 control={form.control}
                 name="companyId"
@@ -577,7 +577,7 @@ export default function ContactForm({ contact, onSuccess, className }: ContactFo
                 Additional Details
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}

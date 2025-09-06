@@ -219,7 +219,7 @@ export default function ContactDetail() {
                     Personal Information
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <span className="text-sm font-medium text-muted-foreground">Full Name</span>
@@ -291,7 +291,7 @@ export default function ContactDetail() {
                       Current Employment
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <span className="text-sm font-medium text-muted-foreground">Company</span>
@@ -345,7 +345,7 @@ export default function ContactDetail() {
                 <CardHeader>
                   <CardTitle className="text-base">Contact Information</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   {/* Emails */}
                   {contact.emails && contact.emails.length > 0 && (
                     <div>
@@ -453,7 +453,7 @@ export default function ContactDetail() {
             </CardHeader>
             <CardContent>
               {contact.employmentHistory && Array.isArray(contact.employmentHistory) && contact.employmentHistory.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                   {contact.employmentHistory.map((employment: any, index: number) => (
                     <div key={index} className="border rounded-none p-4">
                       <div className="flex justify-between items-start mb-2">
@@ -499,7 +499,7 @@ export default function ContactDetail() {
               </CardHeader>
               <CardContent>
                 {contact.addresses && contact.addresses.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                     {contact.addresses.map((address, index) => (
                       <div key={index} className="border rounded-none p-4">
                         <div className="flex items-center justify-between mb-2">
@@ -536,7 +536,7 @@ export default function ContactDetail() {
               <CardHeader>
                 <CardTitle>Communication</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 border border-gray-200 dark:border-gray-700 p-4">
                 <div>
                   <span className="text-sm font-medium text-muted-foreground">Primary Email</span>
                   <p className="text-sm">
