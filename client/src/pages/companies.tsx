@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Plus, Search, Eye, Edit, MoreHorizontal, Filter, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,12 +10,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import CompanyForm from "@/components/company-form";
 import AdvancedTable from "@/components/ui/advanced-table";
 import { apiClient } from "@/lib/api";
 import { Company } from "@/lib/types";
@@ -26,7 +25,6 @@ export default function Companies() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("updatedAt:desc");
   const [pageSize, setPageSize] = useState(25);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
 
   const { data: companiesData, isLoading, error } = useQuery({
@@ -106,22 +104,12 @@ export default function Companies() {
               <p className="text-muted-foreground">Manage and organize your company database</p>
             </div>
           </div>
-          <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-add-company">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Company
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
-              <DialogHeader>
-                <DialogTitle>Add New Company</DialogTitle>
-              </DialogHeader>
-              <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
-                <CompanyForm onSuccess={() => setIsCreateModalOpen(false)} />
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Link href="/companies/create">
+            <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-add-company">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Company
+            </Button>
+          </Link>
         </div>
         
         {/* Modern 21st.dev Stats Cards */}
@@ -243,8 +231,8 @@ export default function Companies() {
                 ]
               }))}
               isLoading={isLoading}
-              onView={(id) => console.log('View company:', id)}
-              onEdit={(id) => console.log('Edit company:', id)}
+              onView={(id) => window.location.href = `/companies/${id}/overview`}
+              onEdit={(id) => window.location.href = `/companies/${id}/edit`}
             />
           </TabsContent>
           
@@ -268,8 +256,8 @@ export default function Companies() {
                 ]
               }))}
               isLoading={isLoading}
-              onView={(id) => console.log('View company:', id)}
-              onEdit={(id) => console.log('Edit company:', id)}
+              onView={(id) => window.location.href = `/companies/${id}/overview`}
+              onEdit={(id) => window.location.href = `/companies/${id}/edit`}
             />
           </TabsContent>
           
@@ -293,8 +281,8 @@ export default function Companies() {
                 ]
               }))}
               isLoading={isLoading}
-              onView={(id) => console.log('View company:', id)}
-              onEdit={(id) => console.log('Edit company:', id)}
+              onView={(id) => window.location.href = `/companies/${id}/overview`}
+              onEdit={(id) => window.location.href = `/companies/${id}/edit`}
             />
           </TabsContent>
           
@@ -318,8 +306,8 @@ export default function Companies() {
                 ]
               }))}
               isLoading={isLoading}
-              onView={(id) => console.log('View company:', id)}
-              onEdit={(id) => console.log('Edit company:', id)}
+              onView={(id) => window.location.href = `/companies/${id}/overview`}
+              onEdit={(id) => window.location.href = `/companies/${id}/edit`}
             />
           </TabsContent>
         </Tabs>
