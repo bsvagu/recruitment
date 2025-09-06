@@ -125,7 +125,7 @@ export default function CompanyOverview() {
     );
   }
 
-  if (error || !company) {
+  if (error || !company || !company.data) {
     return (
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
@@ -162,14 +162,14 @@ export default function CompanyOverview() {
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">
-                {company.name}
+                {company.data.name}
               </h1>
               <div className="flex items-center space-x-2 mt-1">
-                <Badge className={getStatusColor(company.recordStatus || 'inactive')}>
-                  {company.recordStatus || 'inactive'}
+                <Badge className={getStatusColor(company.data.recordStatus || 'inactive')}>
+                  {company.data.recordStatus || 'inactive'}
                 </Badge>
                 <span className="text-muted-foreground">•</span>
-                <span className="text-muted-foreground">{company.industry || 'No industry specified'}</span>
+                <span className="text-muted-foreground">{company.data.industry || 'No industry specified'}</span>
               </div>
             </div>
           </div>
@@ -205,59 +205,122 @@ export default function CompanyOverview() {
               <CardDescription>Basic company information and contact details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {company.website && (
+              {company.data.websiteUrl && (
                 <div className="flex items-center space-x-3">
                   <Globe className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Website:</span>
                   <a 
-                    href={company.website} 
+                    href={company.data.websiteUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
                   >
-                    {company.website}
+                    {company.data.websiteUrl}
+                  </a>
+                </div>
+              )}
+
+              {company.data.linkedinUrl && (
+                <div className="flex items-center space-x-3">
+                  <Globe className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">LinkedIn:</span>
+                  <a 
+                    href={company.data.linkedinUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {company.data.linkedinUrl}
                   </a>
                 </div>
               )}
               
-              {company.emailDomains && company.emailDomains.length > 0 && (
+              {company.data.emailDomains && company.data.emailDomains.length > 0 && (
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Email Domains:</span>
-                  <span>{company.emailDomains.join(", ")}</span>
+                  <span>{company.data.emailDomains.join(", ")}</span>
                 </div>
               )}
 
-              {company.headquarters && (
+              {company.data.legalName && (
                 <div className="flex items-center space-x-3">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">Headquarters:</span>
-                  <span>{company.headquarters}</span>
+                  <Building2 className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">Legal Name:</span>
+                  <span>{company.data.legalName}</span>
                 </div>
               )}
 
-              {company.employeeCountRange && (
+              {company.data.employeeCountRange && (
                 <div className="flex items-center space-x-3">
                   <Users className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Company Size:</span>
-                  <span>{company.employeeCountRange}</span>
+                  <span>{company.data.employeeCountRange} employees</span>
                 </div>
               )}
 
-              {company.companyType && (
+              {company.data.companyType && (
                 <div className="flex items-center space-x-3">
                   <Building2 className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Company Type:</span>
-                  <span className="capitalize">{company.companyType.replace('_', ' ')}</span>
+                  <span className="capitalize">{company.data.companyType.replace('_', ' ')}</span>
                 </div>
               )}
 
-              {company.description && (
+              {company.data.foundedYear && (
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">Founded:</span>
+                  <span>{company.data.foundedYear}</span>
+                </div>
+              )}
+
+              {company.data.lifecycleStage && (
+                <div className="flex items-center space-x-3">
+                  <Building2 className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">Lifecycle Stage:</span>
+                  <span className="capitalize">{company.data.lifecycleStage.replace('_', ' ')}</span>
+                </div>
+              )}
+
+              {company.data.specialties && company.data.specialties.length > 0 && (
+                <div className="flex items-start space-x-3">
+                  <Building2 className="h-4 w-4 text-muted-foreground mt-0.5" />
+                  <div>
+                    <span className="font-medium">Specialties:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {company.data.specialties.map((specialty, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {specialty}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {company.data.tags && company.data.tags.length > 0 && (
+                <div className="flex items-start space-x-3">
+                  <Building2 className="h-4 w-4 text-muted-foreground mt-0.5" />
+                  <div>
+                    <span className="font-medium">Tags:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {company.data.tags.map((tag, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {company.data.description && (
                 <>
                   <Separator />
                   <div>
                     <h4 className="font-medium mb-2">Description</h4>
-                    <p className="text-muted-foreground leading-relaxed">{company.description}</p>
+                    <p className="text-muted-foreground leading-relaxed">{company.data.description}</p>
                   </div>
                 </>
               )}
@@ -275,21 +338,29 @@ export default function CompanyOverview() {
             <CardContent className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Status</span>
-                <Badge className={getStatusColor(company.recordStatus || 'inactive')}>
-                  {company.recordStatus || 'inactive'}
+                <Badge className={getStatusColor(company.data.recordStatus || 'inactive')}>
+                  {company.data.recordStatus || 'inactive'}
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Industry</span>
-                <span className="font-medium">{company.industry || '—'}</span>
+                <span className="font-medium">{company.data.industry || '—'}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Size</span>
-                <span className="font-medium">{company.employeeCountRange || '—'}</span>
+                <span className="font-medium">{company.data.employeeCountRange || '—'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Type</span>
+                <span className="font-medium">{company.data.companyType || '—'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Founded</span>
+                <span className="font-medium">{company.data.foundedYear || '—'}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Created</span>
-                <span className="font-medium">{formatDate(company.createdAt)}</span>
+                <span className="font-medium">{formatDate(company.data.createdAt)}</span>
               </div>
             </CardContent>
           </Card>
@@ -302,7 +373,7 @@ export default function CompanyOverview() {
           <DialogHeader>
             <DialogTitle>Delete Company</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{company.name}"? This action cannot be undone.
+              Are you sure you want to delete "{company.data.name}"? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end space-x-2 mt-6">

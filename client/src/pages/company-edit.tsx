@@ -91,7 +91,7 @@ export default function CompanyEdit() {
               Edit Company
             </h1>
             <p className="text-muted-foreground">
-              Update {company.name} information
+              Update {company.data?.name || 'company'} information
             </p>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function CompanyEdit() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <CompanyForm company={company} onSuccess={handleSuccess} />
+          <CompanyForm company={company.data} onSuccess={handleSuccess} />
         </CardContent>
       </Card>
     </div>
