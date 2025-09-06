@@ -124,7 +124,7 @@ export default function CompanyDetail() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex items-start space-x-6">
-            <div className="h-20 w-20 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl">
+            <div className="h-20 w-20 rounded-lg bg-gradient-to-br from-blue-500 to-green-600 flex items-center justify-center text-white font-bold text-2xl">
               {getCompanyInitials(company.name)}
             </div>
             <div className="flex-1">

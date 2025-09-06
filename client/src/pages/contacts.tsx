@@ -59,7 +59,7 @@ export default function Contacts() {
       case "lead":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "marketing_qualified_lead":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "sales_qualified_lead":
         return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
       case "opportunity":
@@ -105,8 +105,8 @@ export default function Contacts() {
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Users className="h-6 w-6 text-purple-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Users className="h-6 w-6 text-green-600" />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Contacts</h1>
@@ -115,7 +115,7 @@ export default function Contacts() {
           </div>
           <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-purple-600 hover:bg-purple-700" data-testid="button-add-contact">
+              <Button className="bg-green-600 hover:bg-green-700" data-testid="button-add-contact">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Contact
               </Button>
@@ -164,7 +164,7 @@ export default function Contacts() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Customers</CardTitle>
-              <div className="h-2 w-2 bg-purple-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-full" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{contacts.filter(c => c.lifecycleStage === 'customer').length}</div>

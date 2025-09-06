@@ -171,7 +171,7 @@ export default function Analytics() {
           value={mockMetrics.totalApplications.toLocaleString()}
           change="+8% from last period"
           trend="up"
-          icon={<Users className="h-5 w-5 text-purple-600" />}
+          icon={<Users className="h-5 w-5 text-green-600" />}
           description="All time applications"
         />
         <MetricCard

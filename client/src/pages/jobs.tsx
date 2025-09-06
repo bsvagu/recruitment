@@ -64,7 +64,7 @@ export default function Jobs() {
       case "low":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "urgent":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
@@ -162,8 +162,8 @@ export default function Jobs() {
           </Card>
           <Card className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
-                <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-300" />
+              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                <Calendar className="h-5 w-5 text-green-600 dark:text-green-300" />
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-muted-foreground">Draft Jobs</p>

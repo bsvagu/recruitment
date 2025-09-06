@@ -60,7 +60,7 @@ export default function CompanyOverview() {
       case "prospect":
         return "bg-green-500 text-white";
       case "customer":
-        return "bg-purple-500 text-white";
+        return "bg-green-500 text-white";
       default:
         return "bg-gray-400 text-white";
     }

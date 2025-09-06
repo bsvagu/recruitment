@@ -442,7 +442,7 @@ export default function Insights() {
                 </p>
               </Card>
               <Card className="p-6">
-                <DollarSign className="h-8 w-8 text-purple-600 mx-auto mb-3" />
+                <DollarSign className="h-8 w-8 text-green-600 mx-auto mb-3" />
                 <h4 className="font-semibold mb-2">Cost Optimization</h4>
                 <p className="text-sm text-muted-foreground">
                   Optimize spending across different recruitment channels

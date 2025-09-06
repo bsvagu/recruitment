@@ -97,7 +97,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
       case "prospect":
         return "bg-green-500 text-white";
       case "customer":
-        return "bg-purple-500 text-white";
+        return "bg-green-500 text-white";
       default:
         return "bg-gray-400 text-white";
     }
@@ -189,7 +189,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
                 {visibleColumns.includes("Company") && (
                   <TableCell className="font-medium whitespace-nowrap">
                     <div className="flex items-center space-x-3">
-                      <div className="h-10 w-10 rounded-none bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                      <div className="h-10 w-10 rounded-none bg-gradient-to-br from-blue-500 to-green-600 flex items-center justify-center text-white font-semibold text-sm">
                         {getCompanyInitials(company.name)}
                       </div>
                       <span data-testid={`text-company-name-${company.id}`}>{company.name}</span>
