@@ -54,9 +54,9 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
     defaultValues: {
       name: company?.name || "",
       legalName: company?.legalName || "",
-      industry: company?.industry || "",
-      companyType: company?.companyType || "",
-      employeeCountRange: company?.employeeCountRange || "",
+      industry: company?.industry || undefined,
+      companyType: company?.companyType || undefined,
+      employeeCountRange: company?.employeeCountRange || undefined,
       foundedYear: company?.foundedYear || undefined,
       websiteUrl: company?.websiteUrl || "",
       linkedinUrl: company?.linkedinUrl || "",
@@ -71,10 +71,7 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
 
   const createMutation = useMutation({
     mutationFn: async (data: CompanyFormData) => {
-      return apiRequest("/api/companies", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      return apiRequest("POST", "/api/companies", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
@@ -95,10 +92,7 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
 
   const updateMutation = useMutation({
     mutationFn: async (data: CompanyFormData) => {
-      return apiRequest(`/api/companies/${company!.id}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      });
+      return apiRequest("PATCH", `/api/companies/${company!.id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
@@ -123,13 +117,13 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
     try {
       const submitData = {
         ...data,
-        foundedYear: data.foundedYear || null,
-        websiteUrl: data.websiteUrl || null,
-        linkedinUrl: data.linkedinUrl || null,
-        description: data.description || null,
-        emailDomains: data.emailDomains?.filter(domain => domain.trim()) || null,
-        specialties: data.specialties?.filter(specialty => specialty.trim()) || null,
-        tags: data.tags?.filter(tag => tag.trim()) || null,
+        foundedYear: data.foundedYear || undefined,
+        websiteUrl: data.websiteUrl || undefined,
+        linkedinUrl: data.linkedinUrl || undefined,
+        description: data.description || undefined,
+        emailDomains: data.emailDomains?.filter(domain => domain.trim()) || undefined,
+        specialties: data.specialties?.filter(specialty => specialty.trim()) || undefined,
+        tags: data.tags?.filter(tag => tag.trim()) || undefined,
       };
 
       if (company) {
