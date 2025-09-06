@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, Search, Eye, Edit, MoreHorizontal, Filter } from "lucide-react";
+import { Plus, Search, Eye, Edit, MoreHorizontal, Filter, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,6 +12,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
 import CompanyForm from "@/components/company-form";
 import { apiClient } from "@/lib/api";
 import { Company } from "@/lib/types";
@@ -90,72 +92,138 @@ export default function Companies() {
   }
 
   return (
-    <div>
-      {/* Swigify-style Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-8" data-testid="text-page-title">Companies</h1>
-        
-        {/* Tabs - Swigify Style */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="flex items-center justify-between mb-6">
-            <TabsList className="bg-transparent border-0 p-0 h-auto space-x-8">
-              <TabsTrigger 
-                value="all" 
-                className="bg-transparent border-0 border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:bg-transparent rounded-none px-0 pb-2 text-gray-600 data-[state=active]:text-blue-600 font-medium"
-              >
-                All companies
-              </TabsTrigger>
-              <TabsTrigger 
-                value="active" 
-                className="bg-transparent border-0 border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:bg-transparent rounded-none px-0 pb-2 text-gray-600 data-[state=active]:text-blue-600 font-medium"
-              >
-                Active
-              </TabsTrigger>
-              <TabsTrigger 
-                value="prospects" 
-                className="bg-transparent border-0 border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:bg-transparent rounded-none px-0 pb-2 text-gray-600 data-[state=active]:text-blue-600 font-medium"
-              >
-                Prospects
-              </TabsTrigger>
-              <TabsTrigger 
-                value="customers" 
-                className="bg-transparent border-0 border-b-2 border-transparent data-[state=active]:border-blue-500 data-[state=active]:bg-transparent rounded-none px-0 pb-2 text-gray-600 data-[state=active]:text-blue-600 font-medium"
-              >
-                Customers
-              </TabsTrigger>
-            </TabsList>
-            
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg" data-testid="button-add-company">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Companies
-            </Button>
+    <div className="space-y-6">
+      {/* Modern 21st.dev Header */}
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Building2 className="h-6 w-6 text-blue-600" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Companies</h1>
+              <p className="text-muted-foreground">Manage and organize your company database</p>
+            </div>
           </div>
-          
-          {/* Filter and Search Bar - Swigify Style */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-4">
-              <h2 className="font-medium text-gray-900">All companies</h2>
-              <div className="flex items-center space-x-3">
+          <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-add-company">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Company
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
+              <DialogHeader>
+                <DialogTitle>Add New Company</DialogTitle>
+              </DialogHeader>
+              <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+                <CompanyForm onSuccess={() => setIsCreateModalOpen(false)} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+        
+        {/* Modern 21st.dev Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Companies</CardTitle>
+              <Building2 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{meta.total}</div>
+              <p className="text-xs text-muted-foreground">+2.5% from last month</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Active</CardTitle>
+              <div className="h-2 w-2 bg-green-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'active').length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Prospects</CardTitle>
+              <div className="h-2 w-2 bg-yellow-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'prospect').length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Customers</CardTitle>
+              <div className="h-2 w-2 bg-blue-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'customer').length}</div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Enhanced Filter Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Companies</CardTitle>
+            <CardDescription>Filter and search through your company database</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col lg:flex-row gap-4 mb-6">
+              <div className="flex-1">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input 
                     type="text"
-                    placeholder="Search for customer Name & ID"
+                    placeholder="Search companies by name, domain, industry..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 w-64 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-lg"
+                    className="pl-10"
                     data-testid="input-search-companies"
                   />
                 </div>
-                <Button variant="outline" className="border-gray-200 text-gray-600 hover:bg-gray-50 rounded-lg">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filter
-                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Select value={industryFilter} onValueChange={setIndustryFilter}>
+                  <SelectTrigger className="w-40" data-testid="select-industry-filter">
+                    <SelectValue placeholder="Industry" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Industries</SelectItem>
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-32" data-testid="select-status-filter">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="prospect">Prospect</SelectItem>
+                    <SelectItem value="customer">Customer</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-          </div>
-          <TabsContent value="all" className="mt-0">
-            <CompaniesTable 
+        
+        {/* Modern 21st.dev Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="all">All Companies</TabsTrigger>
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="prospects">Prospects</TabsTrigger>
+            <TabsTrigger value="customers">Customers</TabsTrigger>
+          </TabsList>
+          <TabsContent value="all" className="mt-4">
+            <ModernCompaniesTable 
               companies={companies} 
               isLoading={isLoading}
               getStatusColor={getStatusColor}
@@ -164,8 +232,8 @@ export default function Companies() {
             />
           </TabsContent>
           
-          <TabsContent value="active" className="mt-0">
-            <CompaniesTable 
+          <TabsContent value="active" className="mt-4">
+            <ModernCompaniesTable 
               companies={companies.filter((c: Company) => c.recordStatus === 'active')} 
               isLoading={isLoading}
               getStatusColor={getStatusColor}
@@ -174,8 +242,8 @@ export default function Companies() {
             />
           </TabsContent>
           
-          <TabsContent value="prospects" className="mt-0">
-            <CompaniesTable 
+          <TabsContent value="prospects" className="mt-4">
+            <ModernCompaniesTable 
               companies={companies.filter((c: Company) => c.recordStatus === 'prospect')} 
               isLoading={isLoading}
               getStatusColor={getStatusColor}
@@ -184,8 +252,8 @@ export default function Companies() {
             />
           </TabsContent>
           
-          <TabsContent value="customers" className="mt-0">
-            <CompaniesTable 
+          <TabsContent value="customers" className="mt-4">
+            <ModernCompaniesTable 
               companies={companies.filter((c: Company) => c.recordStatus === 'customer')} 
               isLoading={isLoading}
               getStatusColor={getStatusColor}
@@ -194,97 +262,157 @@ export default function Companies() {
             />
           </TabsContent>
         </Tabs>
+          </CardContent>
+        </Card>
 
-        
-        {/* Dialog for adding companies */}
-        <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
-            <DialogHeader>
-              <DialogTitle>Add New Company</DialogTitle>
-            </DialogHeader>
-            <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
-              <CompanyForm onSuccess={() => setIsCreateModalOpen(false)} />
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   );
 }
 
-// Swigify-style table component
-function CompaniesTable({ companies, isLoading, getStatusColor, getCompanyInitials, formatTimeAgo }: {
+// Modern 21st.dev table component
+function ModernCompaniesTable({ companies, isLoading, getStatusColor, getCompanyInitials, formatTimeAgo }: {
   companies: Company[];
   isLoading: boolean;
   getStatusColor: (status: string) => string;
   getCompanyInitials: (name: string) => string;
   formatTimeAgo: (date: string) => string;
 }) {
-  return (
-    <div className="bg-white border border-gray-200 rounded-lg">
-      {/* Table Header */}
-      <div className="px-6 py-4 border-b border-gray-200">
-        <div className="grid grid-cols-6 gap-4">
-          <span className="text-sm font-medium text-gray-900">COMPANY ID</span>
-          <span className="text-sm font-medium text-gray-900">COMPANY NAME</span>
-          <span className="text-sm font-medium text-gray-900">INDUSTRY</span>
-          <span className="text-sm font-medium text-gray-900">LOCATION</span>
-          <span className="text-sm font-medium text-gray-900">EMPLOYEES</span>
-          <span className="text-sm font-medium text-gray-900">STATUS</span>
-        </div>
-      </div>
-      
-      {/* Table Body */}
-      <div>
-        {isLoading ? (
-          <div className="space-y-3">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="px-6 py-4 border-b border-gray-100 last:border-0">
-                <div className="grid grid-cols-6 gap-4 items-center">
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-4 w-32" />
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-4 w-16" />
-                  <Skeleton className="h-6 w-20 rounded-full" />
-                </div>
-              </div>
+  if (isLoading) {
+    return (
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-12">
+                <Checkbox />
+              </TableHead>
+              <TableHead>Company</TableHead>
+              <TableHead>Industry</TableHead>
+              <TableHead>Size</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Updated</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <TableRow key={index}>
+                <TableCell><Skeleton className="h-4 w-4" /></TableCell>
+                <TableCell>
+                  <div className="flex items-center space-x-3">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div>
+                      <Skeleton className="h-4 w-32 mb-1" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
+                <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                <TableCell><Skeleton className="h-8 w-24" /></TableCell>
+              </TableRow>
             ))}
-          </div>
-        ) : companies.length === 0 ? (
-          <div className="px-6 py-12 text-center text-gray-500">
-            <p>No companies found</p>
-            <p className="text-sm mt-1">Try adjusting your search or filters</p>
-          </div>
-        ) : (
-          companies.map((company: Company) => (
-            <div key={company.id} className="px-6 py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors" data-testid={`row-company-${company.id}`}>
-              <div className="grid grid-cols-6 gap-4 items-center">
-                <span className="text-sm text-gray-900 font-mono" data-testid={`text-company-id-${company.id}`}>
-                  {company.id.slice(0, 8)}
-                </span>
-                <span className="text-sm font-medium text-gray-900" data-testid={`text-company-name-${company.id}`}>
-                  {company.name}
-                </span>
-                <span className="text-sm text-gray-600" data-testid={`text-company-industry-${company.id}`}>
-                  {company.industry || '—'}
-                </span>
-                <span className="text-sm text-gray-600" data-testid={`text-company-location-${company.id}`}>
-                  {(company as any).headquarters || company.description?.slice(0, 20) || '—'}
-                </span>
-                <span className="text-sm text-gray-600" data-testid={`text-company-employees-${company.id}`}>
-                  {company.employeeCountRange || '—'}
-                </span>
-                <div>
-                  <Badge className={`${getStatusColor(company.recordStatus || 'inactive')} border-0 text-xs font-medium`} data-testid={`badge-company-status-${company.id}`}>
-                    {company.recordStatus || 'inactive'}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+          </TableBody>
+        </Table>
       </div>
+    );
+  }
+
+  if (companies.length === 0) {
+    return (
+      <Alert>
+        <AlertDescription>
+          No companies found matching your criteria. Try adjusting your search or filters.
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
+  return (
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-12">
+              <Checkbox data-testid="checkbox-select-all" />
+            </TableHead>
+            <TableHead>Company</TableHead>
+            <TableHead>Industry</TableHead>
+            <TableHead>Size</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Updated</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {companies.map((company: Company) => (
+            <TableRow key={company.id} className="hover:bg-muted/50" data-testid={`row-company-${company.id}`}>
+              <TableCell>
+                <Checkbox data-testid={`checkbox-company-${company.id}`} />
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                    {getCompanyInitials(company.name)}
+                  </div>
+                  <div>
+                    <div className="font-medium" data-testid={`text-company-name-${company.id}`}>
+                      {company.name}
+                    </div>
+                    <div className="text-sm text-muted-foreground" data-testid={`text-company-domain-${company.id}`}>
+                      {company.emailDomains?.[0] || "No domain"}
+                    </div>
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell>
+                <span className="text-sm" data-testid={`text-company-industry-${company.id}`}>
+                  {company.industry || "—"}
+                </span>
+              </TableCell>
+              <TableCell>
+                <span className="text-sm" data-testid={`text-company-size-${company.id}`}>
+                  {company.employeeCountRange || "—"}
+                </span>
+              </TableCell>
+              <TableCell>
+                <Badge variant="secondary" className={getStatusColor(company.recordStatus || 'inactive')} data-testid={`badge-company-status-${company.id}`}>
+                  {company.recordStatus || 'inactive'}
+                </Badge>
+              </TableCell>
+              <TableCell className="text-sm text-muted-foreground" data-testid={`text-company-updated-${company.id}`}>
+                {formatTimeAgo(company.updatedAt instanceof Date ? company.updatedAt.toISOString() : company.updatedAt)}
+              </TableCell>
+              <TableCell className="text-right">
+                <div className="flex items-center justify-end space-x-2">
+                  <Button variant="ghost" size="icon" title="View Details" data-testid={`button-view-company-${company.id}`}>
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" title="Edit Company" data-testid={`button-edit-company-${company.id}`}>
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" title="More Options" data-testid={`button-more-company-${company.id}`}>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>View Details</DropdownMenuItem>
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>Archive</DropdownMenuItem>
+                      <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
