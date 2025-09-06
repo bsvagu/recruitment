@@ -168,11 +168,16 @@ export default function Reports() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Modern 21st.dev Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-foreground" data-testid="text-page-title">Reports</h1>
-          <p className="text-muted-foreground">Create, manage, and generate custom reports</p>
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-pink-100 rounded-lg">
+            <FileText className="h-6 w-6 text-pink-600" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Reports</h1>
+            <p className="text-muted-foreground">Create, manage, and generate custom reports</p>
+          </div>
         </div>
         <div className="flex items-center space-x-3">
           <Button variant="outline" size="sm">
