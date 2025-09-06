@@ -203,7 +203,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
     res.json({ data: contact });
   } catch (error) {
     console.error("Error updating contact:", error);
-    if (error.code === 'P2025') {
+    if ((error as any).code === 'P2025') {
       return res.status(404).json({ message: "Contact not found" });
     }
     res.status(400).json({ 
@@ -226,94 +226,10 @@ router.delete("/:id", async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     console.error("Error deleting contact:", error);
-    if (error.code === 'P2025') {
+    if ((error as any).code === 'P2025') {
       return res.status(404).json({ message: "Contact not found" });
     }
     res.status(500).json({ message: "Failed to delete contact" });
-  }
-});
-
-// POST /api/contacts/:id/addresses
-router.post("/:id/addresses", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    
-    // Verify contact exists
-    const contact = await prisma.contact.findUnique({ where: { id } });
-    if (!contact || contact.isDeleted) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-
-    const addressData = {
-      ...req.body,
-      entityType: "contact",
-      entityId: id,
-    };
-    
-    const address = await prisma.address.create({
-      data: addressData,
-    });
-    
-    res.status(201).json({ data: address });
-  } catch (error) {
-    console.error("Error creating address:", error);
-    res.status(400).json({ message: "Failed to create address" });
-  }
-});
-
-// POST /api/contacts/:id/emails
-router.post("/:id/emails", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    
-    // Verify contact exists
-    const contact = await prisma.contact.findUnique({ where: { id } });
-    if (!contact || contact.isDeleted) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-
-    const emailData = {
-      ...req.body,
-      entityType: "contact",
-      entityId: id,
-    };
-    
-    const email = await prisma.email.create({
-      data: emailData,
-    });
-    
-    res.status(201).json({ data: email });
-  } catch (error) {
-    console.error("Error creating email:", error);
-    res.status(400).json({ message: "Failed to create email" });
-  }
-});
-
-// POST /api/contacts/:id/phones
-router.post("/:id/phones", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    
-    // Verify contact exists
-    const contact = await prisma.contact.findUnique({ where: { id } });
-    if (!contact || contact.isDeleted) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
-
-    const phoneData = {
-      ...req.body,
-      entityType: "contact",
-      entityId: id,
-    };
-    
-    const phone = await prisma.phone.create({
-      data: phoneData,
-    });
-    
-    res.status(201).json({ data: phone });
-  } catch (error) {
-    console.error("Error creating phone:", error);
-    res.status(400).json({ message: "Failed to create phone" });
   }
 });
 

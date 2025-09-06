@@ -8,11 +8,12 @@
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio",
-    "db:seed": "tsx server/lib/seed.ts"
+    "db:generate": "prisma generate --schema=server/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=server/prisma/schema.prisma",
+    "db:migrate": "prisma migrate dev --schema=server/prisma/schema.prisma",
+    "db:studio": "prisma studio --schema=server/prisma/schema.prisma",
+    "db:seed": "tsx server/lib/seed.ts",
+    "db:test": "tsx -e \"import('./server/lib/database.js').then(m => m.testDatabaseConnection())\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
