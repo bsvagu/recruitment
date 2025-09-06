@@ -1,0 +1,295 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CompanyType {
+  public
+  private
+  nonprofit
+  government
+  partnership
+  sole_proprietorship
+}
+
+enum EmployeeCountRange {
+  one @map("1")
+  two_to_ten @map("2-10")
+  eleven_to_fifty @map("11-50")
+  fifty_one_to_two_hundred @map("51-200")
+  two_hundred_one_to_five_hundred @map("201-500")
+  five_hundred_one_to_one_thousand @map("501-1000")
+  one_thousand_one_to_five_thousand @map("1001-5000")
+  five_thousand_one_to_ten_thousand @map("5001-10000")
+  ten_thousand_plus @map("10001+")
+}
+
+enum Industry {
+  technology
+  finance
+  healthcare
+  retail
+  manufacturing
+  consulting
+  education
+  real_estate
+  transportation
+  energy
+  media
+  hospitality
+}
+
+enum LifecycleStage {
+  subscriber
+  lead
+  marketing_qualified_lead
+  sales_qualified_lead
+  opportunity
+  customer
+  evangelist
+  other
+}
+
+enum RecordStatus {
+  active
+  inactive
+  archived
+}
+
+enum AddressType {
+  hq
+  billing
+  shipping
+  office
+  remote
+  home
+  other
+}
+
+enum EmailType {
+  work
+  personal
+  sales
+  support
+  billing
+  other
+}
+
+enum PhoneType {
+  work
+  personal
+  mobile
+  fax
+  other
+}
+
+enum Seniority {
+  intern
+  entry
+  mid
+  senior
+  lead
+  principal
+  manager
+  director
+  vp
+  c_level
+  owner
+}
+
+enum Role {
+  admin
+  manager
+  recruiter
+  viewer
+}
+
+enum FieldType {
+  text
+  number
+  boolean
+  date
+  select
+  multi_select
+  email
+  url
+  phone
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  firstName String?  @map("first_name")
+  lastName  String?  @map("last_name")
+  role      Role     @default(viewer)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  ownedCompanies Company[] @relation("CompanyOwner")
+  ownedContacts  Contact[] @relation("ContactOwner")
+
+  @@map("users")
+}
+
+model FieldDefinition {
+  id         String    @id @default(cuid())
+  entityType String    @map("entity_type")
+  key        String
+  label      String
+  type       FieldType
+  options    Json?
+  isRequired Boolean   @default(false) @map("is_required")
+  isActive   Boolean   @default(true) @map("is_active")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("field_definitions")
+}
+
+model Company {
+  id                  String               @id @default(cuid())
+  name                String
+  legalName           String?              @map("legal_name")
+  emailDomains        String[]             @map("email_domains")
+  companyType         CompanyType?         @map("company_type")
+  employeeCountRange  EmployeeCountRange?  @map("employee_count_range")
+  industry            Industry?
+  specialties         String[]
+  foundedYear         Int?                 @map("founded_year")
+  description         String?
+  websiteUrl          String?              @map("website_url")
+  linkedinUrl         String?              @map("linkedin_url")
+  logoUrl             String?              @map("logo_url")
+  bannerUrl           String?              @map("banner_url")
+  lifecycleStage      LifecycleStage       @default(lead) @map("lifecycle_stage")
+  recordStatus        RecordStatus         @default(active) @map("record_status")
+  ownerId             String?              @map("owner_id")
+  tags                String[]
+  customFields        Json?                @map("custom_fields")
+  isDeleted           Boolean              @default(false) @map("is_deleted")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+
+  // Relations
+  owner     User?     @relation("CompanyOwner", fields: [ownerId], references: [id])
+  contacts  Contact[]
+  addresses Address[]
+  emails    Email[]
+  phones    Phone[]
+
+  @@map("companies")
+}
+
+model Contact {
+  id                    String          @id @default(cuid())
+  prefix                String?
+  firstName             String          @map("first_name")
+  middleName            String?         @map("middle_name")
+  lastName              String          @map("last_name")
+  suffix                String?
+  preferredName         String?         @map("preferred_name")
+  pronouns              String?
+  headline              String?
+  title                 String?
+  department            String?
+  seniority             Seniority?
+  companyId             String?         @map("company_id")
+  companyNameSnapshot   String?         @map("company_name_snapshot")
+  linkedinUrl           String?         @map("linkedin_url")
+  locationLabel         String?         @map("location_label")
+  timeZone              String?         @map("time_zone")
+  employmentStartDate   DateTime?       @map("employment_start_date")
+  employmentEndDate     DateTime?       @map("employment_end_date")
+  isCurrentEmployee     Boolean         @default(true) @map("is_current_employee")
+  employmentHistory     Json?           @map("employment_history")
+  lifecycleStage        LifecycleStage  @default(lead) @map("lifecycle_stage")
+  recordStatus          RecordStatus    @default(active) @map("record_status")
+  ownerId               String?         @map("owner_id")
+  tags                  String[]
+  notes                 String?
+  customFields          Json?           @map("custom_fields")
+  isDeleted             Boolean         @default(false) @map("is_deleted")
+  createdAt             DateTime        @default(now()) @map("created_at")
+  updatedAt             DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  company   Company?  @relation(fields: [companyId], references: [id])
+  owner     User?     @relation("ContactOwner", fields: [ownerId], references: [id])
+  addresses Address[]
+  emails    Email[]
+  phones    Phone[]
+
+  @@map("contacts")
+}
+
+model Address {
+  id          String      @id @default(cuid())
+  entityType  String      @map("entity_type")
+  entityId    String      @map("entity_id")
+  type        AddressType @default(other)
+  label       String?
+  street1     String?
+  street2     String?
+  city        String?
+  state       String?
+  postalCode  String?     @map("postal_code")
+  countryCode String?     @map("country_code")
+  latitude    String?
+  longitude   String?
+  isPrimary   Boolean     @default(false) @map("is_primary")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  company Company? @relation(fields: [entityId], references: [id])
+  contact Contact? @relation(fields: [entityId], references: [id])
+
+  @@map("addresses")
+}
+
+model Email {
+  id         String    @id @default(cuid())
+  entityType String    @map("entity_type")
+  entityId   String    @map("entity_id")
+  type       EmailType @default(other)
+  email      String
+  isPrimary  Boolean   @default(false) @map("is_primary")
+  isVerified Boolean   @default(false) @map("is_verified")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  company Company? @relation(fields: [entityId], references: [id])
+  contact Contact? @relation(fields: [entityId], references: [id])
+
+  @@map("emails")
+}
+
+model Phone {
+  id         String    @id @default(cuid())
+  entityType String    @map("entity_type")
+  entityId   String    @map("entity_id")
+  type       PhoneType @default(other)
+  phone      String
+  isPrimary  Boolean   @default(false) @map("is_primary")
+  isVerified Boolean   @default(false) @map("is_verified")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  company Company? @relation(fields: [entityId], references: [id])
+  contact Contact? @relation(fields: [entityId], references: [id])
+
+  @@map("phones")
+}
