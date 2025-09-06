@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import CompanyForm from "@/components/company-form";
+import AdvancedTable from "@/components/ui/advanced-table";
 import { apiClient } from "@/lib/api";
 import { Company } from "@/lib/types";
 
@@ -223,42 +224,102 @@ export default function Companies() {
             <TabsTrigger value="customers">Customers</TabsTrigger>
           </TabsList>
           <TabsContent value="all" className="mt-4">
-            <ModernCompaniesTable 
-              companies={companies} 
+            <AdvancedTable 
+              data={companies.map(company => ({
+                id: company.id,
+                name: company.name,
+                domain: company.emailDomains?.[0] || company.website,
+                status: company.recordStatus || 'inactive' as any,
+                industry: company.industry,
+                size: company.employeeCountRange,
+                location: company.headquarters || 'Unknown',
+                createdAt: formatTimeAgo(company.createdAt),
+                contacts: [
+                  {
+                    name: 'Contact',
+                    email: 'contact@' + (company.emailDomains?.[0] || 'company.com'),
+                    role: 'Manager'
+                  }
+                ]
+              }))}
               isLoading={isLoading}
-              getStatusColor={getStatusColor}
-              getCompanyInitials={getCompanyInitials}
-              formatTimeAgo={formatTimeAgo}
+              onView={(id) => console.log('View company:', id)}
+              onEdit={(id) => console.log('Edit company:', id)}
             />
           </TabsContent>
           
           <TabsContent value="active" className="mt-4">
-            <ModernCompaniesTable 
-              companies={companies.filter((c: Company) => c.recordStatus === 'active')} 
+            <AdvancedTable 
+              data={companies.filter(c => c.recordStatus === 'active').map(company => ({
+                id: company.id,
+                name: company.name,
+                domain: company.emailDomains?.[0] || company.website,
+                status: company.recordStatus || 'inactive' as any,
+                industry: company.industry,
+                size: company.employeeCountRange,
+                location: company.headquarters || 'Unknown',
+                createdAt: formatTimeAgo(company.createdAt),
+                contacts: [
+                  {
+                    name: 'Contact',
+                    email: 'contact@' + (company.emailDomains?.[0] || 'company.com'),
+                    role: 'Manager'
+                  }
+                ]
+              }))}
               isLoading={isLoading}
-              getStatusColor={getStatusColor}
-              getCompanyInitials={getCompanyInitials}
-              formatTimeAgo={formatTimeAgo}
+              onView={(id) => console.log('View company:', id)}
+              onEdit={(id) => console.log('Edit company:', id)}
             />
           </TabsContent>
           
           <TabsContent value="prospects" className="mt-4">
-            <ModernCompaniesTable 
-              companies={companies.filter((c: Company) => c.recordStatus === 'prospect')} 
+            <AdvancedTable 
+              data={companies.filter(c => c.recordStatus === 'prospect').map(company => ({
+                id: company.id,
+                name: company.name,
+                domain: company.emailDomains?.[0] || company.website,
+                status: company.recordStatus || 'inactive' as any,
+                industry: company.industry,
+                size: company.employeeCountRange,
+                location: company.headquarters || 'Unknown',
+                createdAt: formatTimeAgo(company.createdAt),
+                contacts: [
+                  {
+                    name: 'Contact',
+                    email: 'contact@' + (company.emailDomains?.[0] || 'company.com'),
+                    role: 'Manager'
+                  }
+                ]
+              }))}
               isLoading={isLoading}
-              getStatusColor={getStatusColor}
-              getCompanyInitials={getCompanyInitials}
-              formatTimeAgo={formatTimeAgo}
+              onView={(id) => console.log('View company:', id)}
+              onEdit={(id) => console.log('Edit company:', id)}
             />
           </TabsContent>
           
           <TabsContent value="customers" className="mt-4">
-            <ModernCompaniesTable 
-              companies={companies.filter((c: Company) => c.recordStatus === 'customer')} 
+            <AdvancedTable 
+              data={companies.filter(c => c.recordStatus === 'customer').map(company => ({
+                id: company.id,
+                name: company.name,
+                domain: company.emailDomains?.[0] || company.website,
+                status: company.recordStatus || 'inactive' as any,
+                industry: company.industry,
+                size: company.employeeCountRange,
+                location: company.headquarters || 'Unknown',
+                createdAt: formatTimeAgo(company.createdAt),
+                contacts: [
+                  {
+                    name: 'Contact',
+                    email: 'contact@' + (company.emailDomains?.[0] || 'company.com'),
+                    role: 'Manager'
+                  }
+                ]
+              }))}
               isLoading={isLoading}
-              getStatusColor={getStatusColor}
-              getCompanyInitials={getCompanyInitials}
-              formatTimeAgo={formatTimeAgo}
+              onView={(id) => console.log('View company:', id)}
+              onEdit={(id) => console.log('Edit company:', id)}
             />
           </TabsContent>
         </Tabs>
@@ -270,149 +331,3 @@ export default function Companies() {
   );
 }
 
-// Modern 21st.dev table component
-function ModernCompaniesTable({ companies, isLoading, getStatusColor, getCompanyInitials, formatTimeAgo }: {
-  companies: Company[];
-  isLoading: boolean;
-  getStatusColor: (status: string) => string;
-  getCompanyInitials: (name: string) => string;
-  formatTimeAgo: (date: string) => string;
-}) {
-  if (isLoading) {
-    return (
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-12">
-                <Checkbox />
-              </TableHead>
-              <TableHead>Company</TableHead>
-              <TableHead>Industry</TableHead>
-              <TableHead>Size</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Updated</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <TableRow key={index}>
-                <TableCell><Skeleton className="h-4 w-4" /></TableCell>
-                <TableCell>
-                  <div className="flex items-center space-x-3">
-                    <Skeleton className="h-10 w-10 rounded-full" />
-                    <div>
-                      <Skeleton className="h-4 w-32 mb-1" />
-                      <Skeleton className="h-3 w-24" />
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell><Skeleton className="h-4 w-20" /></TableCell>
-                <TableCell><Skeleton className="h-4 w-16" /></TableCell>
-                <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
-                <TableCell><Skeleton className="h-4 w-20" /></TableCell>
-                <TableCell><Skeleton className="h-8 w-24" /></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    );
-  }
-
-  if (companies.length === 0) {
-    return (
-      <Alert>
-        <AlertDescription>
-          No companies found matching your criteria. Try adjusting your search or filters.
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
-  return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-12">
-              <Checkbox data-testid="checkbox-select-all" />
-            </TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Industry</TableHead>
-            <TableHead>Size</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Updated</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {companies.map((company: Company) => (
-            <TableRow key={company.id} className="hover:bg-muted/50" data-testid={`row-company-${company.id}`}>
-              <TableCell>
-                <Checkbox data-testid={`checkbox-company-${company.id}`} />
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center space-x-3">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
-                    {getCompanyInitials(company.name)}
-                  </div>
-                  <div>
-                    <div className="font-medium" data-testid={`text-company-name-${company.id}`}>
-                      {company.name}
-                    </div>
-                    <div className="text-sm text-muted-foreground" data-testid={`text-company-domain-${company.id}`}>
-                      {company.emailDomains?.[0] || "No domain"}
-                    </div>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <span className="text-sm" data-testid={`text-company-industry-${company.id}`}>
-                  {company.industry || "—"}
-                </span>
-              </TableCell>
-              <TableCell>
-                <span className="text-sm" data-testid={`text-company-size-${company.id}`}>
-                  {company.employeeCountRange || "—"}
-                </span>
-              </TableCell>
-              <TableCell>
-                <Badge variant="secondary" className={getStatusColor(company.recordStatus || 'inactive')} data-testid={`badge-company-status-${company.id}`}>
-                  {company.recordStatus || 'inactive'}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-sm text-muted-foreground" data-testid={`text-company-updated-${company.id}`}>
-                {formatTimeAgo(company.updatedAt instanceof Date ? company.updatedAt.toISOString() : company.updatedAt)}
-              </TableCell>
-              <TableCell className="text-right">
-                <div className="flex items-center justify-end space-x-2">
-                  <Button variant="ghost" size="icon" title="View Details" data-testid={`button-view-company-${company.id}`}>
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" title="Edit Company" data-testid={`button-edit-company-${company.id}`}>
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" title="More Options" data-testid={`button-more-company-${company.id}`}>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View Details</DropdownMenuItem>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Archive</DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
