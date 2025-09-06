@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment Portal - Companies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)",
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    popover: {
+                        DEFAULT: "var(--popover)",
+                        foreground: "var(--popover-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)",
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    destructive: {
+                        DEFAULT: "var(--destructive)",
+                        foreground: "var(--destructive-foreground)",
+                    },
+                    border: "var(--border)",
+                    input: "var(--input)",
+                    ring: "var(--ring)",
+                    success: "var(--success)",
+                    warning: "var(--warning)",
+                },
+                fontFamily: {
+                    sans: ["var(--font-sans)"],
+                }
+            },
+        }
+    };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: hsl(0 0% 100%);
+            --foreground: hsl(224 71.4% 4.1%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(224 71.4% 4.1%);
+            --popover: hsl(0 0% 100%);
+            --popover-foreground: hsl(224 71.4% 4.1%);
+            --primary: hsl(210 100% 50%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(220 14.3% 95.9%);
+            --secondary-foreground: hsl(220.9 39.3% 11%);
+            --muted: hsl(220 14.3% 95.9%);
+            --muted-foreground: hsl(220 8.9% 46.1%);
+            --accent: hsl(220 14.3% 95.9%);
+            --accent-foreground: hsl(220.9 39.3% 11%);
+            --destructive: hsl(0 84.2% 60.2%);
+            --destructive-foreground: hsl(210 40% 98%);
+            --border: hsl(220 13% 91%);
+            --input: hsl(220 13% 91%);
+            --ring: hsl(210 100% 50%);
+            --success: hsl(142 76% 36%);
+            --warning: hsl(38 92% 50%);
+            --radius: 8px;
+            --font-sans: 'Inter', sans-serif;
+        }
+        
+        * {
+            font-family: var(--font-sans);
+        }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground">
+    <!-- @COMPONENT: Layout Container -->
+    <div class="min-h-screen bg-background">
+        
+        <!-- @COMPONENT: Navigation Header -->
+        <header class="border-b border-border bg-card shadow-sm">
+            <div class="flex h-16 items-center justify-between px-6">
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
+                        <div class="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
+                            <i class="fas fa-building text-primary-foreground text-sm"></i>
+                        </div>
+                        <span class="text-xl font-semibold">RecruitPortal</span>
+                    </div>
+                    
+                    <nav class="hidden md:flex items-center space-x-6">
+                        <a href="#" class="text-sm font-medium text-primary border-b-2 border-primary pb-4 -mb-px">Companies</a>
+                        <a href="#" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Contacts</a>
+                        <a href="#" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Reports</a>
+                        <a href="#" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Settings</a>
+                    </nav>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-sm"></i>
+                        <input 
+                            type="text" 
+                            placeholder="Global search..."
+                            class="w-64 pl-10 pr-4 py-2 text-sm border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none"
+                        />
+                    </div>
+                    
+                    <button class="relative p-2 text-muted-foreground hover:text-foreground">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 h-4 w-4 bg-destructive text-destructive-foreground rounded-full text-xs flex items-center justify-center">3</span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2">
+                        <div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center">
+                            <span class="text-sm font-medium text-secondary-foreground">JD</span>
+                        </div>
+                        <span class="text-sm font-medium" data-bind="user.name">John Doe</span>
+                        <span class="text-xs text-muted-foreground">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- @COMPONENT: Main Content Area -->
+        <div class="flex">
+            
+            <!-- @COMPONENT: Sidebar Navigation -->
+            <aside class="w-64 border-r border-border bg-card h-screen sticky top-16">
+                <div class="p-4 space-y-2">
+                    <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Management</div>
+                    
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md bg-primary/10 text-primary font-medium">
+                        <i class="fas fa-building w-4"></i>
+                        <span>Companies</span>
+                        <span class="ml-auto text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full" data-bind="companies.count">247</span>
+                    </a>
+                    
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                        <i class="fas fa-users w-4"></i>
+                        <span>Contacts</span>
+                        <span class="ml-auto text-xs" data-bind="contacts.count">1,432</span>
+                    </a>
+                    
+                    <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                        <i class="fas fa-briefcase w-4"></i>
+                        <span>Jobs</span>
+                        <span class="ml-auto text-xs" data-bind="jobs.count">89</span>
+                    </a>
+                    
+                    <div class="pt-4">
+                        <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Analytics</div>
+                        
+                        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                            <i class="fas fa-chart-line w-4"></i>
+                            <span>Reports</span>
+                        </a>
+                        
+                        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                            <i class="fas fa-chart-pie w-4"></i>
+                            <span>Insights</span>
+                        </a>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Admin</div>
+                        
+                        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                            <i class="fas fa-cog w-4"></i>
+                            <span>Settings</span>
+                        </a>
+                        
+                        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                            <i class="fas fa-users-cog w-4"></i>
+                            <span>User Management</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- @COMPONENT: Main Content -->
+            <main class="flex-1 p-6">
+                
+                <!-- @COMPONENT: Page Header -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h1 class="text-2xl font-semibold text-foreground">Companies</h1>
+                            <p class="text-muted-foreground">Manage your company database and relationships</p>
+                        </div>
+                        <button 
+                            onclick="openCreateCompanyModal()"
+                            data-event="click:openCreateModal" 
+                            class="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 font-medium transition-colors flex items-center space-x-2"
+                        >
+                            <i class="fas fa-plus text-sm"></i>
+                            <span>Add Company</span>
+                        </button>
+                    </div>
+
+                    <!-- @COMPONENT: Search and Filters Bar -->
+                    <div class="bg-card border border-border rounded-lg p-4 space-y-4">
+                        <div class="flex flex-wrap items-center gap-4">
+                            
+                            <!-- @COMPONENT: Search Input -->
+                            <div class="flex-1 min-w-64">
+                                <div class="relative">
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                                    <input 
+                                        type="text"
+                                        placeholder="Search companies by name, domain, industry..."
+                                        class="w-full pl-10 pr-4 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none"
+                                        data-bind="searchQuery"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <!-- @COMPONENT: Filter Dropdowns -->
+                            <div class="flex items-center space-x-3">
+                                <select class="px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none" data-bind="industryFilter">
+                                    <option value="">All Industries</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="retail">Retail</option>
+                                </select>
+                                
+                                <select class="px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none" data-bind="sizeFilter">
+                                    <option value="">All Sizes</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="201-500">201-500 employees</option>
+                                    <option value="501-1000">501-1000 employees</option>
+                                    <option value="1001-5000">1001-5000 employees</option>
+                                    <option value="5001+">5001+ employees</option>
+                                </select>
+                                
+                                <select class="px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none" data-bind="statusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="prospect">Prospect</option>
+                                    <option value="customer">Customer</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- @COMPONENT: Active Filter Chips -->
+                        <div class="flex items-center gap-2" id="activeFilters" style="display: none;">
+                            <span class="text-sm text-muted-foreground">Active filters:</span>
+                            <!-- @MAP: activeFilters.map(filter => ( -->
+                            <div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm flex items-center space-x-2">
+                                <span data-bind="filter.label">Technology</span>
+                                <button class="hover:bg-primary/20 rounded-full p-0.5">
+                                    <i class="fas fa-times text-xs"></i>
+                                </button>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- @COMPONENT: Data Table -->
+                <div class="bg-card border border-border rounded-lg shadow-sm">
+                    
+                    <!-- @COMPONENT: Table Header -->
+                    <div class="flex items-center justify-between p-4 border-b border-border">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-sm text-muted-foreground">
+                                Showing <span class="font-medium text-foreground" data-bind="table.showing">1-25</span> 
+                                of <span class="font-medium text-foreground" data-bind="table.total">247</span> companies
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <select class="px-3 py-2 text-sm border border-input rounded-md bg-background" data-bind="sortBy">
+                                <option value="name:asc">Name A-Z</option>
+                                <option value="name:desc">Name Z-A</option>
+                                <option value="updatedAt:desc">Recently Updated</option>
+                                <option value="createdAt:desc">Recently Added</option>
+                                <option value="employeeCount:desc">Size (Large to Small)</option>
+                            </select>
+                            
+                            <div class="flex border border-input rounded-md">
+                                <button class="px-3 py-2 text-sm bg-primary text-primary-foreground">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                                <button class="px-3 py-2 text-sm hover:bg-accent">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- @COMPONENT: Table Content -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-muted/50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                        <input type="checkbox" class="rounded border-input" />
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Company</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Industry</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Size</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Location</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Updated</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-card divide-y divide-border">
+                                <!-- @MAP: companies.map(company => ( -->
+                                <tr class="hover:bg-muted/30 transition-colors" data-mock="true">
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-input" />
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="h-10 w-10 rounded-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                                                T
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-foreground" data-bind="company.name">TechCorp Solutions</div>
+                                                <div class="text-sm text-muted-foreground" data-bind="company.domain">techcorp.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.industry">Technology</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.employeeCount">501-1000</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.location">San Francisco, CA</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-success/10 text-success" data-bind="company.status">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground" data-bind="company.updatedAt">
+                                        2 hours ago
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="View Details">
+                                                <i class="fas fa-eye text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="Edit Company">
+                                                <i class="fas fa-edit text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="More Options">
+                                                <i class="fas fa-ellipsis-h text-muted-foreground text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-muted/30 transition-colors" data-mock="true">
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-input" />
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="h-10 w-10 rounded-md bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white font-semibold">
+                                                I
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-foreground" data-bind="company.name">InnovateLabs</div>
+                                                <div class="text-sm text-muted-foreground" data-bind="company.domain">innovatelabs.io</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.industry">Software</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.employeeCount">51-200</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.location">New York, NY</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-warning/10 text-warning" data-bind="company.status">
+                                            Prospect
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground" data-bind="company.updatedAt">
+                                        1 day ago
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="View Details">
+                                                <i class="fas fa-eye text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="Edit Company">
+                                                <i class="fas fa-edit text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="More Options">
+                                                <i class="fas fa-ellipsis-h text-muted-foreground text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-muted/30 transition-colors" data-mock="true">
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-input" />
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="h-10 w-10 rounded-md bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center text-white font-semibold">
+                                                G
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-foreground" data-bind="company.name">GlobalTech Enterprises</div>
+                                                <div class="text-sm text-muted-foreground" data-bind="company.domain">globaltech.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.industry">Consulting</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.employeeCount">1001-5000</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-muted-foreground" data-bind="company.location">London, UK</span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-success/10 text-success" data-bind="company.status">
+                                            Customer
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground" data-bind="company.updatedAt">
+                                        3 days ago
+                                    </td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="View Details">
+                                                <i class="fas fa-eye text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="Edit Company">
+                                                <i class="fas fa-edit text-muted-foreground text-sm"></i>
+                                            </button>
+                                            <button class="p-2 hover:bg-muted rounded-md transition-colors" title="More Options">
+                                                <i class="fas fa-ellipsis-h text-muted-foreground text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- @END_MAP )) -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- @COMPONENT: Pagination -->
+                    <div class="flex items-center justify-between px-4 py-3 border-t border-border">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-muted-foreground">Show</span>
+                            <select class="px-2 py-1 text-sm border border-input rounded bg-background" data-bind="pageSize">
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span class="text-sm text-muted-foreground">per page</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-2 text-sm border border-input rounded hover:bg-accent transition-colors" disabled>
+                                <i class="fas fa-chevron-left mr-1"></i>
+                                Previous
+                            </button>
+                            
+                            <div class="flex space-x-1">
+                                <button class="px-3 py-2 text-sm bg-primary text-primary-foreground rounded">1</button>
+                                <button class="px-3 py-2 text-sm border border-input rounded hover:bg-accent">2</button>
+                                <button class="px-3 py-2 text-sm border border-input rounded hover:bg-accent">3</button>
+                                <span class="px-3 py-2 text-sm text-muted-foreground">...</span>
+                                <button class="px-3 py-2 text-sm border border-input rounded hover:bg-accent">10</button>
+                            </div>
+                            
+                            <button class="px-3 py-2 text-sm border border-input rounded hover:bg-accent transition-colors">
+                                Next
+                                <i class="fas fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- @COMPONENT: Create/Edit Company Modal -->
+    <div id="companyModal" class="fixed inset-0 bg-black/50 modal-backdrop hidden flex items-center justify-center z-50" onclick="closeCreateCompanyModal(event)">
+        <div class="bg-card rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden" onclick="event.stopPropagation()">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-border">
+                <div>
+                    <h2 class="text-xl font-semibold text-foreground">Add New Company</h2>
+                    <p class="text-sm text-muted-foreground mt-1">Create a new company profile in your recruitment database</p>
+                </div>
+                <button onclick="closeCreateCompanyModal()" class="p-2 hover:bg-muted rounded-md transition-colors">
+                    <i class="fas fa-times text-muted-foreground"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="overflow-y-auto max-h-[calc(90vh-200px)]">
+                <form class="p-6 space-y-8">
+                    
+                    <!-- @COMPONENT: Basic Information Section -->
+                    <div>
+                        <h3 class="text-lg font-medium text-foreground mb-4 flex items-center">
+                            <i class="fas fa-building text-primary mr-2"></i>
+                            Basic Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Company Name *</label>
+                                <input type="text" required class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="Enter company name" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Legal Name</label>
+                                <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="Legal entity name" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Industry *</label>
+                                <select required class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                    <option value="">Select industry</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="retail">Retail</option>
+                                    <option value="manufacturing">Manufacturing</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Company Type</label>
+                                <select class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                    <option value="">Select type</option>
+                                    <option value="public">Public Company</option>
+                                    <option value="private">Private Company</option>
+                                    <option value="nonprofit">Non-profit</option>
+                                    <option value="government">Government</option>
+                                    <option value="partnership">Partnership</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Employee Count</label>
+                                <select class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                    <option value="">Select range</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="201-500">201-500 employees</option>
+                                    <option value="501-1000">501-1000 employees</option>
+                                    <option value="1001-5000">1001-5000 employees</option>
+                                    <option value="5001+">5001+ employees</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Founded Year</label>
+                                <input type="number" min="1800" max="2024" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="e.g., 2010" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- @COMPONENT: Web & Social Section -->
+                    <div>
+                        <h3 class="text-lg font-medium text-foreground mb-4 flex items-center">
+                            <i class="fas fa-globe text-primary mr-2"></i>
+                            Web & Social
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Website URL</label>
+                                <input type="url" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="https://company.com" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">LinkedIn URL</label>
+                                <input type="url" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="https://linkedin.com/company/..." />
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-foreground mb-2">Email Domains</label>
+                            <div class="flex flex-wrap gap-2 mb-2" id="emailDomains">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-secondary-foreground">
+                                    company.com
+                                    <button type="button" class="ml-2 hover:bg-secondary/80 rounded-full p-1">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="Add email domain (e.g., company.com)" />
+                        </div>
+                    </div>
+
+                    <!-- @COMPONENT: Address Section -->
+                    <div>
+                        <h3 class="text-lg font-medium text-foreground mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                            Addresses
+                        </h3>
+                        <div class="border border-border rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <label class="block text-sm font-medium text-foreground">Headquarters</label>
+                                <span class="inline-flex px-2 py-1 text-xs font-medium rounded bg-primary/10 text-primary">Primary</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-foreground mb-2">Street Address</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="123 Main Street" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">City</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="San Francisco" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">State/Province</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="CA" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Postal Code</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="94105" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Country</label>
+                                    <select class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                        <option value="">Select country</option>
+                                        <option value="US">🇺🇸 United States</option>
+                                        <option value="CA">🇨🇦 Canada</option>
+                                        <option value="GB">🇬🇧 United Kingdom</option>
+                                        <option value="DE">🇩🇪 Germany</option>
+                                        <option value="FR">🇫🇷 France</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="mt-3 text-sm text-primary hover:text-primary/80 font-medium">
+                            <i class="fas fa-plus mr-1"></i>
+                            Add another address
+                        </button>
+                    </div>
+
+                    <!-- @COMPONENT: Contact Information Section -->
+                    <div>
+                        <h3 class="text-lg font-medium text-foreground mb-4 flex items-center">
+                            <i class="fas fa-phone text-primary mr-2"></i>
+                            Contact Information
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Email Addresses</label>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-2">
+                                        <select class="px-3 py-2 border border-input rounded-md bg-background flex-shrink-0">
+                                            <option>Work</option>
+                                            <option>Support</option>
+                                            <option>Sales</option>
+                                        </select>
+                                        <input type="email" class="flex-1 px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="contact@company.com" />
+                                        <button type="button" class="px-3 py-2 text-destructive hover:bg-destructive/10 rounded-md">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="mt-2 text-sm text-primary hover:text-primary/80 font-medium">
+                                    <i class="fas fa-plus mr-1"></i>
+                                    Add email
+                                </button>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Phone Numbers</label>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-2">
+                                        <select class="px-3 py-2 border border-input rounded-md bg-background flex-shrink-0">
+                                            <option>Work</option>
+                                            <option>Fax</option>
+                                            <option>Support</option>
+                                        </select>
+                                        <input type="tel" class="flex-1 px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="+1 (555) 123-4567" />
+                                        <button type="button" class="px-3 py-2 text-destructive hover:bg-destructive/10 rounded-md">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="mt-2 text-sm text-primary hover:text-primary/80 font-medium">
+                                    <i class="fas fa-plus mr-1"></i>
+                                    Add phone
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- @COMPONENT: Additional Details Section -->
+                    <div>
+                        <h3 class="text-lg font-medium text-foreground mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-primary mr-2"></i>
+                            Additional Details
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Description</label>
+                                <textarea rows="3" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none resize-none" placeholder="Brief description of the company..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Specialties/Tags</label>
+                                <div class="flex flex-wrap gap-2 mb-2" id="specialtyTags">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-accent text-accent-foreground">
+                                        Software Development
+                                        <button type="button" class="ml-2 hover:bg-accent/80 rounded-full p-1">
+                                            <i class="fas fa-times text-xs"></i>
+                                        </button>
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-accent text-accent-foreground">
+                                        AI/ML
+                                        <button type="button" class="ml-2 hover:bg-accent/80 rounded-full p-1">
+                                            <i class="fas fa-times text-xs"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <input type="text" class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring focus:border-ring outline-none" placeholder="Add specialty tags..." />
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Lifecycle Stage</label>
+                                    <select class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                        <option value="">Select stage</option>
+                                        <option value="lead">Lead</option>
+                                        <option value="prospect">Prospect</option>
+                                        <option value="customer">Customer</option>
+                                        <option value="partner">Partner</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Status</label>
+                                    <select class="w-full px-3 py-2 border border-input rounded-md bg-background focus:ring-2 focus:ring-ring outline-none">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="archived">Archived</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end space-x-3 p-6 border-t border-border bg-muted/20">
+                <button type="button" onclick="closeCreateCompanyModal()" class="px-4 py-2 text-sm font-medium text-muted-foreground border border-input rounded-md hover:bg-accent transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" data-event="click:submitCompany" class="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Company
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- @END_COMPONENT: Layout Container -->
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        
+        (function() {
+            // Modal functionality
+            window.openCreateCompanyModal = function() {
+                document.getElementById('companyModal').classList.remove('hidden');
+                // TODO: Initialize form state and validation
+            };
+            
+            window.closeCreateCompanyModal = function(event) {
+                if (!event || event.target === event.currentTarget) {
+                    document.getElementById('companyModal').classList.add('hidden');
+                    // TODO: Reset form and clear any temporary data
+                }
+            };
+            
+            // Keyboard shortcut for modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    window.closeCreateCompanyModal();
+                }
+                // TODO: Add more keyboard shortcuts for accessibility
+            });
+            
+            // Search and filter functionality placeholders
+            // TODO: Implement debounced search functionality
+            // TODO: Implement filter state management
+            // TODO: Implement sorting and pagination
+            // TODO: Implement table row selection
+            // TODO: Implement bulk actions
+            
+        })();
+    </script>
+</body>
+</html>
