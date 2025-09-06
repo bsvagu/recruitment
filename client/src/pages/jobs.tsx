@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, Search, Eye, Edit, MoreHorizontal, Calendar, Users, MapPin, Clock } from "lucide-react";
+import { Plus, Search, Eye, Edit, MoreHorizontal, Calendar, Users, MapPin, Clock, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,6 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Job } from "@/lib/types";
 
 export default function Jobs() {
@@ -103,13 +105,18 @@ export default function Jobs() {
   }
 
   return (
-    <div>
-      {/* Page Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground" data-testid="text-page-title">Jobs</h1>
-            <p className="text-muted-foreground">Manage job postings and track recruitment progress</p>
+    <div className="space-y-6">
+      {/* Modern 21st.dev Header */}
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Briefcase className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Jobs</h1>
+              <p className="text-muted-foreground">Manage job postings and recruitment pipeline</p>
+            </div>
           </div>
           <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
             <DialogTrigger asChild>

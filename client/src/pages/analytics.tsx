@@ -102,11 +102,16 @@ export default function Analytics() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Modern 21st.dev Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-foreground" data-testid="text-page-title">Analytics</h1>
-          <p className="text-muted-foreground">Track recruitment performance and insights</p>
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-orange-100 rounded-lg">
+            <BarChart3 className="h-6 w-6 text-orange-600" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Analytics</h1>
+            <p className="text-muted-foreground">Track recruitment performance and insights</p>
+          </div>
         </div>
         <div className="flex items-center space-x-3">
           <Select value={dateRange} onValueChange={setDateRange}>

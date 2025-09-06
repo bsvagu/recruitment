@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, Search, Eye, Edit, MoreHorizontal } from "lucide-react";
+import { Plus, Search, Eye, Edit, MoreHorizontal, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,6 +12,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ContactForm from "@/components/contact-form";
 import { Contact } from "@/lib/types";
 
@@ -98,19 +100,24 @@ export default function Contacts() {
   }
 
   return (
-    <div>
-      {/* Page Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground" data-testid="text-page-title">Contacts</h1>
-            <p className="text-muted-foreground">Manage your contact database and relationships</p>
+    <div className="space-y-6">
+      {/* Modern 21st.dev Header */}
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Users className="h-6 w-6 text-purple-600" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Contacts</h1>
+              <p className="text-muted-foreground">Manage your professional network and relationships</p>
+            </div>
           </div>
           <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
             <DialogTrigger asChild>
-              <Button className="flex items-center space-x-2" data-testid="button-add-contact">
-                <Plus className="h-4 w-4" />
-                <span>Add Contact</span>
+              <Button className="bg-purple-600 hover:bg-purple-700" data-testid="button-add-contact">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Contact
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
@@ -122,6 +129,47 @@ export default function Contacts() {
               </div>
             </DialogContent>
           </Dialog>
+        </div>
+        
+        {/* Modern 21st.dev Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Contacts</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{meta.total}</div>
+              <p className="text-xs text-muted-foreground">+12% from last month</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Active</CardTitle>
+              <div className="h-2 w-2 bg-green-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{contacts.filter(c => c.recordStatus === 'active').length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Leads</CardTitle>
+              <div className="h-2 w-2 bg-blue-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{contacts.filter(c => c.lifecycleStage === 'lead').length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Customers</CardTitle>
+              <div className="h-2 w-2 bg-purple-500 rounded-full" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{contacts.filter(c => c.lifecycleStage === 'customer').length}</div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Search and Filters */}
