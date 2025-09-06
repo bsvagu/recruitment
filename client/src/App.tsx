@@ -9,6 +9,7 @@ import CompanyCreate from "@/pages/company-create";
 import CompanyEdit from "@/pages/company-edit";
 import CompanyOverview from "@/pages/company-overview";
 import Contacts from "@/pages/contacts";
+import ContactCreate from "@/pages/contact-create";
 import Jobs from "@/pages/jobs";
 import Analytics from "@/pages/analytics";
 import Reports from "@/pages/reports";
@@ -28,6 +29,7 @@ function Router() {
         <Route path="/companies/:id/overview" component={CompanyOverview} />
         <Route path="/companies/:id" component={CompanyDetail} />
         <Route path="/contacts" component={Contacts} />
+        <Route path="/contacts/create" component={ContactCreate} />
         <Route path="/contacts/:id" component={ContactDetail} />
         <Route path="/jobs" component={Jobs} />
         <Route path="/analytics" component={Analytics} />

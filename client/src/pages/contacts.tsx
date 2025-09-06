@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Plus, Search, Eye, Edit, MoreHorizontal, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,12 +10,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ContactForm from "@/components/contact-form";
 import { Contact } from "@/lib/types";
 
 export default function Contacts() {
@@ -24,7 +23,6 @@ export default function Contacts() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("updatedAt:desc");
   const [pageSize, setPageSize] = useState(25);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const { data: contactsData, isLoading, error } = useQuery({
     queryKey: ["/api/contacts", { 
@@ -113,22 +111,12 @@ export default function Contacts() {
               <p className="text-muted-foreground">Manage your professional network and relationships</p>
             </div>
           </div>
-          <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-green-600 hover:bg-green-700" data-testid="button-add-contact">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Contact
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden">
-              <DialogHeader>
-                <DialogTitle>Add New Contact</DialogTitle>
-              </DialogHeader>
-              <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
-                <ContactForm onSuccess={() => setIsCreateModalOpen(false)} />
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Link href="/contacts/create">
+            <Button className="bg-green-600 hover:bg-green-700" data-testid="button-add-contact">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Contact
+            </Button>
+          </Link>
         </div>
         
         {/* Modern 21st.dev Stats Cards */}
