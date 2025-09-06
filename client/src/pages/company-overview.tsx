@@ -58,7 +58,7 @@ export default function CompanyOverview() {
       case "inactive":
         return "bg-gray-400 text-white";
       case "prospect":
-        return "bg-blue-500 text-white";
+        return "bg-green-500 text-white";
       case "customer":
         return "bg-purple-500 text-white";
       default:
@@ -213,7 +213,7 @@ export default function CompanyOverview() {
                     href={company.data.websiteUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                    className="text-green-600 hover:underline"
                   >
                     {company.data.websiteUrl}
                   </a>
@@ -228,7 +228,7 @@ export default function CompanyOverview() {
                     href={company.data.linkedinUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                    className="text-green-600 hover:underline"
                   >
                     {company.data.linkedinUrl}
                   </a>

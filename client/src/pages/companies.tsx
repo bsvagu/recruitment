@@ -48,7 +48,7 @@ export default function Companies() {
       case "prospect":
         return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
       case "customer":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "inactive":
         return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
       default:
@@ -95,8 +95,8 @@ export default function Companies() {
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Building2 className="h-6 w-6 text-blue-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Building2 className="h-6 w-6 text-green-600" />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">Companies</h1>
@@ -104,7 +104,7 @@ export default function Companies() {
             </div>
           </div>
           <Link href="/companies/create">
-            <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-add-company">
+            <Button className="bg-green-600 hover:bg-green-700" data-testid="button-add-company">
               <Plus className="h-4 w-4 mr-2" />
               Add Company
             </Button>
@@ -144,7 +144,7 @@ export default function Companies() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Customers</CardTitle>
-              <div className="h-2 w-2 bg-blue-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-full" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'customer').length}</div>

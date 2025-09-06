@@ -140,8 +140,8 @@ export default function Jobs() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <Card className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-                <Users className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                <Users className="h-5 w-5 text-green-600 dark:text-green-300" />
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-muted-foreground">Total Jobs</p>

@@ -29,8 +29,8 @@ export default function CompanyCreate() {
           </Button>
         </Link>
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-blue-100 rounded-none">
-            <Building2 className="h-6 w-6 text-blue-600" />
+          <div className="p-2 bg-green-100 rounded-none">
+            <Building2 className="h-6 w-6 text-green-600" />
           </div>
           <div>
             <h1 className="text-3xl font-bold tracking-tight" data-testid="text-page-title">

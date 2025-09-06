@@ -95,7 +95,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
       case "inactive":
         return "bg-gray-400 text-white";
       case "prospect":
-        return "bg-blue-500 text-white";
+        return "bg-green-500 text-white";
       case "customer":
         return "bg-purple-500 text-white";
       default:
@@ -203,7 +203,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
                         href={`https://${company.domain}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-500 underline hover:text-blue-600"
+                        className="text-green-500 underline hover:text-green-600"
                         data-testid={`link-company-domain-${company.id}`}
                       >
                         {company.domain}

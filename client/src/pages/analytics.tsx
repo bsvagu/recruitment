@@ -155,7 +155,7 @@ export default function Analytics() {
           value={mockMetrics.totalJobs}
           change="+12% from last period"
           trend="up"
-          icon={<Briefcase className="h-5 w-5 text-blue-600" />}
+          icon={<Briefcase className="h-5 w-5 text-green-600" />}
           description="All time job postings"
         />
         <MetricCard

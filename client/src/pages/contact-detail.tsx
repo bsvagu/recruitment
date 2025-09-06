@@ -46,7 +46,7 @@ export default function ContactDetail() {
   const getLifecycleStageColor = (stage: string) => {
     switch (stage) {
       case "lead":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "marketing_qualified_lead":
         return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
       case "sales_qualified_lead":
