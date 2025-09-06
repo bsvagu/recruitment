@@ -64,23 +64,23 @@ function AppSidebar() {
   return (
     <Sidebar 
       collapsible="icon" 
-      className="border-r bg-green-600 text-white" 
+      className="border-r bg-white text-black" 
       variant="sidebar"
     >
-      <SidebarHeader className="border-b border-green-500">
+      <SidebarHeader className="border-b border-gray-200">
         <div className="flex items-center gap-2 px-2 py-1">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white text-green-600 font-bold text-sm">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-green-600 text-white font-bold text-sm">
             RP
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold text-white">RecruitPortal</span>
-            <span className="truncate text-xs text-green-100">Enterprise</span>
+            <span className="truncate font-semibold text-black">RecruitPortal</span>
+            <span className="truncate text-xs text-gray-600">Enterprise</span>
           </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-green-200">Main Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-black font-medium">Main Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => {
@@ -91,7 +91,7 @@ function AppSidebar() {
                       asChild
                       isActive={isActive}
                       tooltip={item.name}
-                      className="text-green-100 hover:bg-green-700 hover:text-white data-[active=true]:bg-green-700 data-[active=true]:text-white"
+                      className="text-black hover:bg-green-100 hover:text-green-700 data-[active=true]:bg-green-600 data-[active=true]:text-white"
                     >
                       <Link href={item.href}>
                         <item.icon className="h-4 w-4" />
@@ -106,7 +106,7 @@ function AppSidebar() {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel className="text-green-200">Analytics</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-black font-medium">Analytics</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {analyticsItems.map((item) => {
@@ -117,7 +117,7 @@ function AppSidebar() {
                       asChild
                       isActive={isActive}
                       tooltip={item.name}
-                      className="text-green-100 hover:bg-green-700 hover:text-white data-[active=true]:bg-green-700 data-[active=true]:text-white"
+                      className="text-black hover:bg-green-100 hover:text-green-700 data-[active=true]:bg-green-600 data-[active=true]:text-white"
                     >
                       <Link href={item.href}>
                         <item.icon className="h-4 w-4" />
@@ -131,22 +131,22 @@ function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="border-t border-green-500">
+      <SidebarFooter className="border-t border-gray-200">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
-                  className="text-green-100 hover:bg-green-700 hover:text-white data-[state=open]:bg-green-700 data-[state=open]:text-white"
+                  className="text-black hover:bg-green-100 hover:text-green-700 data-[state=open]:bg-green-600 data-[state=open]:text-white"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src="/avatars/admin.jpg" alt="Admin" />
-                    <AvatarFallback className="rounded-lg bg-white text-green-600 font-semibold">AD</AvatarFallback>
+                    <AvatarFallback className="rounded-lg bg-green-600 text-white font-semibold">AD</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-white">Admin User</span>
-                    <span className="truncate text-xs text-green-100">admin@company.com</span>
+                    <span className="truncate font-semibold text-black">Admin User</span>
+                    <span className="truncate text-xs text-gray-600">admin@company.com</span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>
