@@ -15,8 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import AdvancedTable from "@/components/ui/advanced-table";
-import { apiClient } from "@/lib/api";
-import { Company } from "@/lib/types";
+import type { Company } from "@shared/schema";
 
 export default function Companies() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -216,11 +215,11 @@ export default function Companies() {
               data={companies.map(company => ({
                 id: company.id,
                 name: company.name,
-                domain: company.emailDomains?.[0] || company.website,
+                domain: company.emailDomains?.[0] || company.websiteUrl,
                 status: company.recordStatus || 'inactive' as any,
                 industry: company.industry,
                 size: company.employeeCountRange,
-                location: company.headquarters || 'Unknown',
+                location: 'Unknown',
                 createdAt: formatTimeAgo(company.createdAt),
                 contacts: [
                   {
@@ -241,11 +240,11 @@ export default function Companies() {
               data={companies.filter(c => c.recordStatus === 'active').map(company => ({
                 id: company.id,
                 name: company.name,
-                domain: company.emailDomains?.[0] || company.website,
+                domain: company.emailDomains?.[0] || company.websiteUrl,
                 status: company.recordStatus || 'inactive' as any,
                 industry: company.industry,
                 size: company.employeeCountRange,
-                location: company.headquarters || 'Unknown',
+                location: 'Unknown',
                 createdAt: formatTimeAgo(company.createdAt),
                 contacts: [
                   {
@@ -266,11 +265,11 @@ export default function Companies() {
               data={companies.filter(c => c.recordStatus === 'prospect').map(company => ({
                 id: company.id,
                 name: company.name,
-                domain: company.emailDomains?.[0] || company.website,
+                domain: company.emailDomains?.[0] || company.websiteUrl,
                 status: company.recordStatus || 'inactive' as any,
                 industry: company.industry,
                 size: company.employeeCountRange,
-                location: company.headquarters || 'Unknown',
+                location: 'Unknown',
                 createdAt: formatTimeAgo(company.createdAt),
                 contacts: [
                   {
@@ -291,11 +290,11 @@ export default function Companies() {
               data={companies.filter(c => c.recordStatus === 'customer').map(company => ({
                 id: company.id,
                 name: company.name,
-                domain: company.emailDomains?.[0] || company.website,
+                domain: company.emailDomains?.[0] || company.websiteUrl,
                 status: company.recordStatus || 'inactive' as any,
                 industry: company.industry,
                 size: company.employeeCountRange,
-                location: company.headquarters || 'Unknown',
+                location: 'Unknown',
                 createdAt: formatTimeAgo(company.createdAt),
                 contacts: [
                   {

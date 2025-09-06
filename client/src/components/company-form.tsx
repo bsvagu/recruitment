@@ -16,21 +16,21 @@ import TagInput from "./tag-input";
 import EmailList from "./email-list";
 import PhoneList from "./phone-list";
 import AddressForm from "./address-form";
-import { apiClient } from "@/lib/api";
-import type { Company, InsertCompany } from "@/lib/types";
+import { apiRequest } from "@/lib/queryClient";
+import type { Company } from "@shared/schema";
 
 const companySchema = z.object({
   name: z.string().min(1, "Company name is required"),
   legalName: z.string().optional(),
-  industry: z.string().optional(),
-  companyType: z.string().optional(),
-  employeeCountRange: z.string().optional(),
+  industry: z.enum(["technology", "finance", "healthcare", "retail", "manufacturing", "consulting", "education", "real_estate", "transportation", "energy", "media", "hospitality"]).optional(),
+  companyType: z.enum(["public", "private", "nonprofit", "government", "partnership", "sole_proprietorship"]).optional(),
+  employeeCountRange: z.enum(["1", "2-10", "11-50", "51-200", "201-500", "501-1000", "1001-5000", "5001-10000", "10001+"]).optional(),
   foundedYear: z.coerce.number().min(1800).max(new Date().getFullYear()).optional(),
   websiteUrl: z.string().url().optional().or(z.literal("")),
   linkedinUrl: z.string().url().optional().or(z.literal("")),
   description: z.string().optional(),
-  lifecycleStage: z.string().optional(),
-  recordStatus: z.string().default("active"),
+  lifecycleStage: z.enum(["subscriber", "lead", "marketing_qualified_lead", "sales_qualified_lead", "opportunity", "customer", "evangelist", "other"]).optional(),
+  recordStatus: z.enum(["active", "inactive", "archived"]).default("active"),
   emailDomains: z.array(z.string()).optional(),
   specialties: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
@@ -70,7 +70,12 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
   });
 
   const createMutation = useMutation({
-    mutationFn: apiClient.companies.create,
+    mutationFn: async (data: CompanyFormData) => {
+      return apiRequest("/api/companies", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
       toast({
@@ -89,7 +94,12 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
   });
 
   const updateMutation = useMutation({
-    mutationFn: (data: Partial<InsertCompany>) => apiClient.companies.update(company!.id, data),
+    mutationFn: async (data: CompanyFormData) => {
+      return apiRequest(`/api/companies/${company!.id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
       queryClient.invalidateQueries({ queryKey: ["/api/companies", company!.id] });
@@ -111,7 +121,7 @@ export default function CompanyForm({ company, onSuccess, className }: CompanyFo
   const handleSubmit = async (data: CompanyFormData) => {
     setIsSubmitting(true);
     try {
-      const submitData: InsertCompany = {
+      const submitData = {
         ...data,
         foundedYear: data.foundedYear || null,
         websiteUrl: data.websiteUrl || null,

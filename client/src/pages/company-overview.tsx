@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { apiClient } from "@/lib/api";
+import { apiClient } from "@/lib/api-request";
 
 export default function CompanyOverview() {
   const { id } = useParams<{ id: string }>();
@@ -27,8 +27,7 @@ export default function CompanyOverview() {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiClient.delete(`/api/companies/${id}`);
-      return response;
+      return await apiClient.delete(`/api/companies/${id}`);
     },
     onSuccess: () => {
       toast({
