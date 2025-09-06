@@ -187,7 +187,7 @@ export default function Insights() {
       case "down":
         return <TrendingDown className="h-3 w-3 text-red-600" />;
       default:
-        return <div className="h-3 w-3 rounded-full bg-gray-400" />;
+        return <div className="h-3 w-3 rounded-none bg-gray-400" />;
     }
   };
 
@@ -309,7 +309,7 @@ export default function Insights() {
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-lg bg-background">
+                    <div className="p-2 rounded-none bg-background">
                       {getInsightIcon(insight.type)}
                     </div>
                     <div>
@@ -349,7 +349,7 @@ export default function Insights() {
                   {insight.description}
                 </CardDescription>
                 {insight.recommendation && (
-                  <div className="bg-background/50 rounded-lg p-4 border">
+                  <div className="bg-background/50 rounded-none p-4 border">
                     <h4 className="text-sm font-medium mb-2 flex items-center">
                       <Target className="h-4 w-4 mr-2 text-green-600" />
                       Recommendation

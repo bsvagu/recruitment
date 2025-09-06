@@ -81,7 +81,7 @@ export default function PhoneList({ phones = [], onChange, className }: PhoneLis
       
       <CardContent className="space-y-4">
         {phoneList.map((phoneEntry, index) => (
-          <div key={index} className="flex items-center gap-3 p-3 border rounded-lg" data-testid={`phone-entry-${index}`}>
+          <div key={index} className="flex items-center gap-3 p-3 border rounded-none" data-testid={`phone-entry-${index}`}>
             <Select
               value={phoneEntry.type}
               onValueChange={(value) => updatePhone(index, 'type', value)}

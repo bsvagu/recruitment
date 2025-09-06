@@ -120,7 +120,7 @@ function AdvancedTable({ data, isLoading = false, onEdit, onView }: AdvancedTabl
           </div>
           <div className="space-y-3">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-12 bg-gray-100 rounded"></div>
+              <div key={i} className="h-12 bg-gray-100 rounded-none"></div>
             ))}
           </div>
         </div>

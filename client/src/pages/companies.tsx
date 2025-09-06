@@ -95,7 +95,7 @@ export default function Companies() {
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-green-100 rounded-lg">
+            <div className="p-2 bg-green-100 rounded-none">
               <Building2 className="h-6 w-6 text-green-600" />
             </div>
             <div>
@@ -126,7 +126,7 @@ export default function Companies() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active</CardTitle>
-              <div className="h-2 w-2 bg-green-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'active').length}</div>
@@ -135,7 +135,7 @@ export default function Companies() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Prospects</CardTitle>
-              <div className="h-2 w-2 bg-yellow-500 rounded-full" />
+              <div className="h-2 w-2 bg-yellow-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'prospect').length}</div>
@@ -144,7 +144,7 @@ export default function Companies() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Customers</CardTitle>
-              <div className="h-2 w-2 bg-green-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{companies.filter(c => c.recordStatus === 'customer').length}</div>

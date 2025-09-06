@@ -455,7 +455,7 @@ export default function ContactDetail() {
               {contact.employmentHistory && Array.isArray(contact.employmentHistory) && contact.employmentHistory.length > 0 ? (
                 <div className="space-y-4">
                   {contact.employmentHistory.map((employment: any, index: number) => (
-                    <div key={index} className="border rounded-lg p-4">
+                    <div key={index} className="border rounded-none p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div>
                           <h4 className="font-medium">{employment.title || "Position"}</h4>
@@ -501,7 +501,7 @@ export default function ContactDetail() {
                 {contact.addresses && contact.addresses.length > 0 ? (
                   <div className="space-y-4">
                     {contact.addresses.map((address, index) => (
-                      <div key={index} className="border rounded-lg p-4">
+                      <div key={index} className="border rounded-none p-4">
                         <div className="flex items-center justify-between mb-2">
                           <span className="font-medium text-sm">
                             {address.label || address.type}

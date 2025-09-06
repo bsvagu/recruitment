@@ -34,7 +34,7 @@ function MetricCard({ title, value, change, trend = "neutral", icon, description
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <div className="p-2 bg-muted rounded-lg">{icon}</div>
+        <div className="p-2 bg-muted rounded-none">{icon}</div>
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
@@ -65,14 +65,14 @@ function ChartPlaceholder({ title, height = "h-80", type }: ChartPlaceholderProp
       case "bar":
         return <BarChart3 className="h-12 w-12 text-muted-foreground" />;
       case "pie":
-        return <div className="h-12 w-12 rounded-full border-4 border-muted-foreground" />;
+        return <div className="h-12 w-12 rounded-none border-4 border-muted-foreground" />;
       case "area":
         return <BarChart3 className="h-12 w-12 text-muted-foreground" />;
     }
   };
 
   return (
-    <div className={`${height} flex flex-col items-center justify-center border-2 border-dashed border-muted rounded-lg bg-muted/10`}>
+    <div className={`${height} flex flex-col items-center justify-center border-2 border-dashed border-muted rounded-none bg-muted/10`}>
       {getChartIcon()}
       <h3 className="mt-4 text-lg font-semibold text-muted-foreground">{title}</h3>
       <p className="text-sm text-muted-foreground mt-1">Chart will be rendered here</p>
@@ -105,7 +105,7 @@ export default function Analytics() {
       {/* Modern 21st.dev Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-orange-100 rounded-lg">
+          <div className="p-2 bg-orange-100 rounded-none">
             <BarChart3 className="h-6 w-6 text-orange-600" />
           </div>
           <div>

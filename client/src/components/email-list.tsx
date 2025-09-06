@@ -82,7 +82,7 @@ export default function EmailList({ emails = [], onChange, className }: EmailLis
       
       <CardContent className="space-y-4">
         {emailList.map((emailEntry, index) => (
-          <div key={index} className="flex items-center gap-3 p-3 border rounded-lg" data-testid={`email-entry-${index}`}>
+          <div key={index} className="flex items-center gap-3 p-3 border rounded-none" data-testid={`email-entry-${index}`}>
             <Select
               value={emailEntry.type}
               onValueChange={(value) => updateEmail(index, 'type', value)}

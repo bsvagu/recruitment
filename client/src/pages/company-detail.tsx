@@ -124,7 +124,7 @@ export default function CompanyDetail() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex items-start space-x-6">
-            <div className="h-20 w-20 rounded-lg bg-gradient-to-br from-blue-500 to-green-600 flex items-center justify-center text-white font-bold text-2xl">
+            <div className="h-20 w-20 rounded-none bg-gradient-to-br from-blue-500 to-green-600 flex items-center justify-center text-white font-bold text-2xl">
               {getCompanyInitials(company.name)}
             </div>
             <div className="flex-1">
@@ -266,7 +266,7 @@ export default function CompanyDetail() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {company.addresses.map((address, index) => (
-                      <div key={index} className="border rounded-lg p-4">
+                      <div key={index} className="border rounded-none p-4">
                         <div className="flex items-center justify-between mb-2">
                           <span className="font-medium text-sm">
                             {address.label || address.type}
@@ -397,7 +397,7 @@ export default function CompanyDetail() {
               {company.contacts && company.contacts.length > 0 ? (
                 <div className="space-y-4">
                   {company.contacts.map((contact) => (
-                    <div key={contact.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+                    <div key={contact.id} className="flex items-center space-x-4 p-4 border rounded-none">
                       <Avatar className="h-12 w-12">
                         <AvatarFallback className="text-sm font-medium">
                           {contact.firstName[0]}{contact.lastName[0]}

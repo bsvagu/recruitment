@@ -38,7 +38,7 @@
   --font-sans: Open Sans, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
-  --radius: 1.3rem;
+  --radius: 0rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(220 13% 69% / 0.15);
   --shadow-xs: 0px 1px 3px 0px hsl(220 13% 69% / 0.20);
   --shadow-sm: 0px 1px 2px 0px hsl(220 13% 69% / 0.10), 0px 1px 3px -1px hsl(220 13% 69% / 0.15);
@@ -87,7 +87,7 @@
   --font-sans: Open Sans, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
-  --radius: 1.3rem;
+  --radius: 0rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(220 13% 69% / 0.15);
   --shadow-xs: 0px 1px 3px 0px hsl(220 13% 69% / 0.20);
   --shadow-sm: 0px 1px 2px 0px hsl(220 13% 69% / 0.10), 0px 1px 3px -1px hsl(220 13% 69% / 0.15);

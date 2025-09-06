@@ -69,7 +69,7 @@ function AppSidebar() {
     >
       <SidebarHeader className="border-b border-gray-200">
         <div className="flex items-center gap-2 px-2 py-1">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-green-600 text-white font-bold text-sm">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-none bg-green-600 text-white font-bold text-sm">
             RP
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
@@ -140,9 +140,9 @@ function AppSidebar() {
                   size="lg"
                   className="text-black hover:bg-green-100 hover:text-green-700 data-[state=open]:bg-green-600 data-[state=open]:text-white"
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className="h-8 w-8 rounded-none">
                     <AvatarImage src="/avatars/admin.jpg" alt="Admin" />
-                    <AvatarFallback className="rounded-lg bg-green-600 text-white font-semibold">AD</AvatarFallback>
+                    <AvatarFallback className="rounded-none bg-green-600 text-white font-semibold">AD</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold text-black">Admin User</span>
@@ -152,7 +152,7 @@ function AppSidebar() {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-none"
                 side="bottom"
                 align="end"
                 sideOffset={4}
@@ -196,16 +196,16 @@ export default function Layout({ children }: LayoutProps) {
                 <Input 
                   type="text" 
                   placeholder="Search for customer, Name & ID"
-                  className="w-64 pl-10 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-lg"
+                  className="w-64 pl-10 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-none"
                   data-testid="input-global-search"
                 />
               </div>
               
-              <Button variant="ghost" size="icon" className="relative hover:bg-gray-100 rounded-full" data-testid="button-notifications">
+              <Button variant="ghost" size="icon" className="relative hover:bg-gray-100 rounded-none" data-testid="button-notifications">
                 <Bell className="h-5 w-5 text-gray-600" />
               </Button>
               
-              <Button variant="ghost" size="icon" className="hover:bg-gray-100 rounded-full">
+              <Button variant="ghost" size="icon" className="hover:bg-gray-100 rounded-none">
                 <Settings className="h-5 w-5 text-gray-600" />
               </Button>
               

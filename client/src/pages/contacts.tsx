@@ -105,7 +105,7 @@ export default function Contacts() {
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-green-100 rounded-lg">
+            <div className="p-2 bg-green-100 rounded-none">
               <Users className="h-6 w-6 text-green-600" />
             </div>
             <div>
@@ -146,7 +146,7 @@ export default function Contacts() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active</CardTitle>
-              <div className="h-2 w-2 bg-green-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{contacts.filter(c => c.recordStatus === 'active').length}</div>
@@ -155,7 +155,7 @@ export default function Contacts() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Leads</CardTitle>
-              <div className="h-2 w-2 bg-green-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{contacts.filter(c => c.lifecycleStage === 'lead').length}</div>
@@ -164,7 +164,7 @@ export default function Contacts() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Customers</CardTitle>
-              <div className="h-2 w-2 bg-green-500 rounded-full" />
+              <div className="h-2 w-2 bg-green-500 rounded-none" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{contacts.filter(c => c.lifecycleStage === 'customer').length}</div>
@@ -293,7 +293,7 @@ export default function Contacts() {
                     <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-3">
-                        <Skeleton className="h-10 w-10 rounded-full" />
+                        <Skeleton className="h-10 w-10 rounded-none" />
                         <div>
                           <Skeleton className="h-4 w-32 mb-1" />
                           <Skeleton className="h-3 w-24" />
@@ -303,8 +303,8 @@ export default function Contacts() {
                     <TableCell><Skeleton className="h-4 w-24" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-28" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-16" /></TableCell>
-                    <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
-                    <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
+                    <TableCell><Skeleton className="h-6 w-16 rounded-none" /></TableCell>
+                    <TableCell><Skeleton className="h-6 w-16 rounded-none" /></TableCell>
                     <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                     <TableCell><Skeleton className="h-8 w-24" /></TableCell>
                   </TableRow>

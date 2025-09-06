@@ -171,7 +171,7 @@ export default function Reports() {
       {/* Modern 21st.dev Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-pink-100 rounded-lg">
+          <div className="p-2 bg-pink-100 rounded-none">
             <FileText className="h-6 w-6 text-pink-600" />
           </div>
           <div>
@@ -422,7 +422,7 @@ export default function Reports() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="p-2 bg-primary/10 rounded-lg">
+                      <div className="p-2 bg-primary/10 rounded-none">
                         {report.type === "chart" ? (
                           <BarChart3 className="h-4 w-4 text-primary" />
                         ) : (
